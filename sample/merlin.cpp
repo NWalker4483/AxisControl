@@ -29,7 +29,7 @@ speed_holder(i) = axis_speeds[i];
 public:
     MerlinMR6200(/* args */)
     {
-        reductions;
+        reductions_inv = reductions.inverse();
     }
     ~MerlinMR6200() {}
 };
