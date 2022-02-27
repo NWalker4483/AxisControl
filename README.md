@@ -1,6 +1,7 @@
 # Axis Control
 ## Axis
 ``` Meant for controlling a single axis at a time```
+
 <img src="imgs/collab.png" width= "400">
 
 When creating a child class access you can override
