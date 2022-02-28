@@ -3,7 +3,7 @@
 #include "axis.h"
 #include <math.h> /* fabs */
 
-template<int axis_cnt>
+template<size_t axis_cnt>
 class MultiAxis
 {
 public:
@@ -21,6 +21,9 @@ public:
   void stop();
 
 protected:
+  double current_positions[axis_cnt];
+  double current_speeds[axis_cnt];
+  
   virtual unsigned int getTime() = 0;
   virtual void computeAxisPositions(double *axis_positions) = 0;
   virtual void updateMotorSpeeds(double *axis_speeds) = 0;

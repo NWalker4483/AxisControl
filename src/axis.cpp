@@ -2,9 +2,9 @@
 
 Axis::Axis() {}
 
-void Axis::computePosition(){}
-void Axis::updateMotorSpeed(double axis_speed){}
-unsigned int Axis::getTime(){return 0;}
+void Axis::computePosition() {}
+void Axis::updateMotorSpeed(double axis_speed) {}
+unsigned int Axis::getTime() { return 0; }
 
 void Axis::moveTo(double absolute)
 {
@@ -29,79 +29,86 @@ void Axis::setMaxAcceleration(double acceleration)
   acceleration = fabs(acceleration);
   target_accel = acceleration;
 }
-void Axis::setMaxJerk(double jerk){
+void Axis::setMaxJerk(double jerk)
+{
   jerk = fabs(jerk);
   max_jerk = jerk;
 }
 
-double Axis::getSpeed(){
+double Axis::getSpeed()
+{
   return _speed;
 }
-double Axis::getAcceleration(){
+double Axis::getAcceleration()
+{
   return _accel;
 }
 bool Axis::computeMotionControls(unsigned int time_passed)
 {
-  // double distance_left = distanceToGo();
-  // if ((fabs(distance_left) < min_resolution) or (distance_left == 0)) // Need to stop
-  // {
-  //   setSpeed(0);
-  //   return;
-  // }
-  // if (distance_left > 0){ //Forward
+  double distance_left = distanceToGo();
 
-  // } else  { // Reverse
-
-  // }
-  // jerk = 1;
-  
-  // if (distanceToStop() >= fabs(distance_left)) // Need to decelerate to stop
-  // {
-  //   jerk =
-  // } else {
-  //   -jerk = 
-  // } 
-
-  // // double new_accel = _accels[i] + (jerk / time_scale);
-  // // setAcceleration(i, target_accel[i]);
-  // // double new_speed = speeds + _accels[i] / time_scale
-  // setSpeed( new_speed);
+  if ((fabs(distance_left) < min_resolution) or (distance_left == 0)) // Need to stop
+  {
+    setSpeed(0);
+  }
+  else
+  {
+    switch(limit_mode){
+    case 2: // Not Implemented
+      setAcceleration(_accel + (_accel/time_passed));
+      break;
+    case 1:
+    double dist_to_stop = distanceToStop();
+    setAcceleration(distance_left > dist_to_stop ? target_accel : -target_accel);
+    if (getAcceleration() > 0){ // Speeding Up
+      setSpeed(constrain(_speed + (_accel / time_passed), _speed, target_speed));
+      }
+    else { // Slowing Down
+      setSpeed(constrain(_speed - (_accel / time_passed), -target_speed, _speed));
+    }
+    break;
+    case 0:
+      setSpeed(distance_left > 0 ? target_speed :-target_speed);
+      break;
+    } 
+  }
   return _speed_changed;
 }
-void Axis::computeMotionFeatures(unsigned int time_passed){
+void Axis::computeMotionFeatures(unsigned int time_passed)
+{
   last_speed = _speed;
   last_accel = _accel;
 
   double d_p = last_pose - real_pose;
-  // TODO: Correct Units 
-  _speed = d_p/time_passed; 
+  // TODO: Correct Units
+  _speed = d_p / time_passed;
   double d_v = last_speed - _speed;
-  _accel = d_v/time_passed; 
+  _accel = d_v / time_passed;
 }
 
 double Axis::distanceToGo()
 {
-  return target_pose -real_pose;
+  return target_pose - real_pose;
 }
 
-double Axis::distanceToStop(){ 
+double Axis::distanceToStop()
+{
   switch (limit_mode)
   {
   case 0:
     return 0;
     break;
-  
+
   case 1:
     return fabs((_speed * _speed) / (2. * _accel));
     break;
   case 2:
     return 0;
     break;
-  
+
   default:
     return 0;
   }
-  
 }
 
 double Axis::targetPosition()
@@ -116,14 +123,14 @@ double Axis::currentPosition()
 bool Axis::run()
 {
   unsigned int curr_time = getTime();
-  unsigned int time_passed = curr_time - last_time; 
+  unsigned int time_passed = curr_time - last_time;
 
   computePosition();
   computeMotionFeatures(time_passed);
   computeMotionControls(time_passed);
   if (_speed_changed)
   {
-    updateMotorSpeed(_speed);// Should take in 
+    updateMotorSpeed(_speed); // Should take in
     _speed_changed = false;
   }
   pollMotor();
@@ -135,21 +142,26 @@ bool Axis::run()
 
 void Axis::runToPosition()
 {
-  while (run());
+  while (run())
+    ;
 }
 void Axis::stop()
 {
   // TODO Account for direction
-  if (getSpeed() > 0){
-   move(distanceToStop());
-  } else {
-   move(-distanceToStop());
+  if (getSpeed() > 0)
+  {
+    move(distanceToStop());
+  }
+  else
+  {
+    move(-distanceToStop());
   }
 }
 
-void Axis::setPosition(double pose){
+void Axis::setPosition(double pose)
+{
   last_pose = real_pose;
- real_pose = pose;
+  real_pose = pose;
 }
 
 void Axis::setSpeed(double speed)
@@ -160,7 +172,7 @@ void Axis::setSpeed(double speed)
     _speed_changed = true;
   }
 }
-void Axis::setAcceleration( double acceleration)
+void Axis::setAcceleration(double acceleration)
 {
   if (_accel != acceleration)
   {

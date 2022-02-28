@@ -2,7 +2,7 @@
 #ifndef Single_Axis_h
 #define Single_Axis_h
 #include <math.h> /* fabs */
-
+#include "utils.h"
 class Axis
 {
 public:
