@@ -21,6 +21,7 @@ library: $(OBJ)
 install: library
 	cp libaxis_control.so /usr/lib
 	chmod 0755 /usr/lib/libaxis_control.so
+#cp include/* /usr/local/include
 
 .PHONY: list
 list:

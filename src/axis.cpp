@@ -1,5 +1,8 @@
 #include "axis.h"
+template<typename num>
+num constrain(num val, num min, num max){
 
+}
 Axis::Axis() {}
 
 void Axis::computePosition() {}
