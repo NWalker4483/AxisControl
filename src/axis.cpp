@@ -46,7 +46,7 @@ double Axis::getAcceleration()
 bool Axis::computeMotionControls(unsigned int time_passed)
 {
   double distance_left = distanceToGo();
-
+  double dist_to_stop;
   if ((fabs(distance_left) < min_resolution) or (distance_left == 0)) // Need to stop
   {
     setSpeed(0);
@@ -58,7 +58,7 @@ bool Axis::computeMotionControls(unsigned int time_passed)
       setAcceleration(_accel + (_accel/time_passed));
       break;
     case 1:
-    double dist_to_stop = distanceToStop();
+     dist_to_stop = distanceToStop();
     setAcceleration(distance_left > dist_to_stop ? target_accel : -target_accel);
     if (getAcceleration() > 0){ // Speeding Up
       setSpeed(constrain(_speed + (_accel / time_passed), _speed, target_speed));
