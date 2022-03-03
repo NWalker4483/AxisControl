@@ -9,8 +9,6 @@ OBJ := $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 CPPFLAGS := -Iinclude -fPIC
 CFLAGS   := -Wall # some warnings about bad code
-LDFLAGS  := -Llib  # -L is a linker flag
-LDLIBS   := -lm # Left empty if no libs are needed
 
 all: library
 
@@ -19,6 +17,10 @@ $(OBJ): $(OBJ_DIR)/%.o :$(SRC_DIR)/%.cpp
 
 library: $(OBJ)
 	$(CXX) $(CFLAGS) -shared -o libaxis_control.so $(OBJ)
+
+install: library
+	cp libaxis_control.so /usr/lib
+	chmod 0755 /usr/lib/libaxis_control.so
 
 .PHONY: list
 list:
