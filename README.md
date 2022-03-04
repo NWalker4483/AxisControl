@@ -1,6 +1,6 @@
 # Differential Axis Control
 
-Simple abstract classes for real-time single and multi axis speed/acceleration control.
+Simple abstract classes for single and multi axis speed/acceleration control.
 
 ## Setup 
 mkdir build
@@ -23,7 +23,7 @@ class MyRobot: MultiAxis<3>{
 
     PID pids[3];
     joint_sensor[3];
-    
+
 unsigned int getTime() override {};
 /* If the time passed since isn't passed into the run function then this allows the 
 object to grab how many units of time passed since the program started and compute speed + acceleration. 
