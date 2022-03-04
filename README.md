@@ -1,9 +1,10 @@
 # Differential Axis Control
 
 Simple abstract classes for real-time single and multi axis speed/acceleration control.
-## Setup 
-sudo make install 
 
+## Setup 
+mkdir build
+sudo make install 
 
 ## Overview
 ### MultiAxis<num_axis>
@@ -26,11 +27,13 @@ object to grab how many units of time passed since the program started and compu
             e.g millis();
 */
 
+ there's flexibility, the time code is unitless so speeds should be supplied in the same unit that time provides. 
+
 void computeAxisPositions(double *axis_positions) override {};
 /* this function is passed a pointer in which to store the current position of each controlled axis in order */
 
 void updateMotorSpeeds(double *axis_speeds) override {};
-/* this function is passed a pointer to all of the current target speeds that each axis should attempt to achieve. The motor speeds should then be calculated by the user and applied for proper control*/
+/* this function is passed a pointer to all of the current target speeds that each axis should attempt to achieve. The instantaneous motor speeds should then be calculated by the user and applied for proper control*/
 
 void pollMotors() override {};
 /* this function is meant to stand in the place of anything that needs to be called as often as possible for the motors to move at an appropriate speed
@@ -38,14 +41,14 @@ void pollMotors() override {};
     e.g AccelStepper::runSpeed()
 */
 }
+
+MyRobot.axis[0].setTargetSpeed(5)// deg/s
 ```
 
 ### Axis
 ``` Can be used for controlling a single axis at a time ```
 
 <img src="imgs/collab.png" width= "400">
-
-When creating a child class access you can override
 
 ``` cpp
 /*

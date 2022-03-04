@@ -49,8 +49,7 @@ bool MultiAxis<axis_cnt>::run()
 template<size_t axis_cnt>
 void MultiAxis<axis_cnt>::runToPositions()
 {
-  while (run())
-    ;
+  while (run());
 }
 
 template<size_t axis_cnt>

@@ -2,7 +2,7 @@
 CXX = gcc
 
 SRC_DIR := src
-OBJ_DIR := obj
+OBJ_DIR := build
 
 SRC := $(wildcard $(SRC_DIR)/*.cpp)
 OBJ := $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)

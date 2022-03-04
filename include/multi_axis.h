@@ -1,7 +1,6 @@
 #ifndef Multi_Axis_h
 #define Multi_Axis_h
 #include "axis.h"
-#include <math.h> /* fabs */
 
 template<size_t axis_cnt>
 class MultiAxis
