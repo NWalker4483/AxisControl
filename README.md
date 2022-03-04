@@ -21,29 +21,48 @@ This class will instantiate a list of ```Axis``` objects automatically and then 
 
 class MyRobot: MultiAxis<3>{
 
+    PID pids[3];
+    joint_sensor[3];
+    
 unsigned int getTime() override {};
 /* If the time passed since isn't passed into the run function then this allows the 
 object to grab how many units of time passed since the program started and compute speed + acceleration. 
             e.g millis();
 */
 
- there's flexibility, the time code is unitless so speeds should be supplied in the same unit that time provides. 
-
-void computeAxisPositions(double *axis_positions) override {};
+void computeAxisPositions(double *axis_positions) override {
+     for(int i = 0; i < 3; i++) axis_positions[2] = joint_sensor[i].value;
+};
 /* this function is passed a pointer in which to store the current position of each controlled axis in order */
 
-void updateMotorSpeeds(double *axis_speeds) override {};
-/* this function is passed a pointer to all of the current target speeds that each axis should attempt to achieve. The instantaneous motor speeds should then be calculated by the user and applied for proper control*/
+void updateMotorSpeeds(double *axis_speeds) override { 
+    pid[i].setpoint = axis_speeds[i] * reductions;
+};
+/* this function is passed a pointer to all of the current target speeds that each axis should attempt to achieve. 
+The instantaneous motor speeds should then be calculated by the user and applied for proper control*/
 
-void pollMotors() override {};
-/* this function is meant to stand in the place of anything that needs to be called as often as possible for the motors to move at an appropriate speed
+void pollMotors() override {
+   for(int i = 0; i < 3; i++) pid[i].update(axis[i].real_speed);
+};
+/* this function is meant to stand in the place of anything that needs to be called as often as 
+possible for the motors to move at an appropriate speed
 
     e.g AccelStepper::runSpeed()
 */
 }
 
 MyRobot.axis[0].setTargetSpeed(5)// deg/s
+MyRobot.axis[1].setTargetSpeed(10)// deg/s
+MyRobot.axis[2].setTargetSpeed(4)// deg/s
+
+MyRobot.setLimitMode(1); // Limit Acceleration
+double home_pose[3] = {34, 0, 90};
+MyRobot.moveAllTo(home_pose);
+
+MyRobot.runToPositions();
+
 ```
+
 
 ### Axis
 ``` Can be used for controlling a single axis at a time ```

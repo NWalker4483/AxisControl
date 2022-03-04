@@ -11,7 +11,10 @@ public:
   ~MultiAxis<axis_cnt>() {}
   Axis axis[axis_cnt];
 
-  void setLimitMode(int mode){}
+  void setLimitMode(int mode){
+    for (int i = 0; i < axis_cnt; i++) axis[i].setLimitMode(mode);
+  }
+  
   void moveAllTo(double *absolute);
   void moveAll(double *relative);
 

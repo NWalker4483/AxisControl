@@ -12,9 +12,9 @@ double approach(double curr, double min, double max, double step){
   // curr should be added to step but with the caveat that it 
   // cannot decrease below min and cannot increase above max
   if (step > 0) {
-    return 0; 
+    return constrain(curr + step, curr, max);
   } else {
- return 0; 
+ return constrain(curr + step, min, curr);
   }
 }
 
@@ -26,6 +26,7 @@ void Axis::moveTo(double absolute)
     target_pose = absolute;
   }
 }
+
 void Axis::move(double relative)
 {
   moveTo((real_pose + relative));
