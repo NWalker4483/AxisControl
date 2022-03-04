@@ -10,11 +10,11 @@ public:
   void moveTo(double absolute);
   void move(double relative);
 
-  void setMaxSpeed(double speed);
-  void setMaxAcceleration(double acceleration);
-  void setMaxJerk(double jerk);
+  void setTargetSpeed(double speed);
+  void setTargetAcceleration(double acceleration);
+  void setTargetJerk(double jerk);
 
-  void setLimitMode(int mode){}
+  void setLimitMode(int mode);
 
   bool computeMotionControls(unsigned int time_passed);
   void computeMotionFeatures(unsigned int time_passed);

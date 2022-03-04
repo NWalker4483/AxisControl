@@ -22,17 +22,19 @@ void Axis::move(double relative)
   moveTo((real_pose + relative));
 }
 
-void Axis::setMaxSpeed(double speed)
+void Axis::setTargetSpeed(double speed)
 {
   speed = fabs(speed);
   target_speed = speed;
 }
-void Axis::setMaxAcceleration(double acceleration)
+
+void Axis::setTargetAcceleration(double acceleration)
 {
   acceleration = fabs(acceleration);
   target_accel = acceleration;
 }
-void Axis::setMaxJerk(double jerk)
+
+void Axis::setTargetJerk(double jerk)
 {
   jerk = fabs(jerk);
   max_jerk = jerk;
@@ -42,10 +44,12 @@ double Axis::getSpeed()
 {
   return _speed;
 }
+
 double Axis::getAcceleration()
 {
   return _accel;
 }
+
 bool Axis::computeMotionControls(unsigned int time_passed)
 {
   double distance_left = distanceToGo();
@@ -77,6 +81,10 @@ bool Axis::computeMotionControls(unsigned int time_passed)
   }
   return _speed_changed;
 }
+
+  void Axis::setLimitMode(int mode){
+    
+  }
 void Axis::computeMotionFeatures(unsigned int time_passed)
 {
   last_speed = _speed;
