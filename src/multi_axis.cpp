@@ -1,20 +1,6 @@
 #include "multi_axis.h"
 
 template<size_t axis_cnt>
-void MultiAxis<axis_cnt>::moveAllTo(double *absolute)
-{
-  for (int i = 0; i < axis_cnt; i++)
-    axis[i].moveTo(absolute[i]);
-}
-
-template<size_t axis_cnt>
-void MultiAxis<axis_cnt>::moveAll(double *relative)
-{
-  for (int i = 0; i < axis_cnt; i++)
-    axis[i].move(relative[i]);
-}
-
-template<size_t axis_cnt>
 bool MultiAxis<axis_cnt>::run()
 {
   unsigned int curr_time = getTime();
@@ -46,14 +32,3 @@ bool MultiAxis<axis_cnt>::run()
   return not done;
 }
 
-template<size_t axis_cnt>
-void MultiAxis<axis_cnt>::runToPositions()
-{
-  while (run());
-}
-
-template<size_t axis_cnt>
-void MultiAxis<axis_cnt>::stop()
-{
-    for (int i = 0; i < axis_cnt; i++) axis[i].stop();
-}

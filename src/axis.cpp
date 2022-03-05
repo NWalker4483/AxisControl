@@ -2,68 +2,32 @@
 template <typename num>
 num constrain(num val, num min, num max)
 {
-  if (val < min)return min;
-  if (val > max)return max;
+  if (val < min)
+    return min;
+  if (val > max)
+    return max;
   return val;
 }
 
-// TODO: use template 
-double approach(double curr, double min, double max, double step){
-  // curr should be added to step but with the caveat that it 
+// TODO: use template
+double approach(double curr, double min, double max, double step)
+{
+  // curr should be added to step but with the caveat that it
   // cannot decrease below min and cannot increase above max
-  if (step > 0) {
-    return constrain(curr + step, curr, max);
-  } else {
- return constrain(curr + step, min, curr);
-  }
-}
-
-void Axis::moveTo(double absolute)
-{
-  if (target_pose != absolute)
+  if (step > 0)
   {
-    _target_changed = true;
-    target_pose = absolute;
+    return constrain(curr + step, curr, max);
   }
-}
-
-void Axis::move(double relative)
-{
-  moveTo((real_pose + relative));
-}
-
-void Axis::setTargetSpeed(double speed)
-{
-  speed = fabs(speed);
-  target_speed = speed;
-}
-
-void Axis::setTargetAcceleration(double acceleration)
-{
-  acceleration = fabs(acceleration);
-  target_accel = acceleration;
-}
-
-void Axis::setTargetJerk(double jerk)
-{
-  jerk = fabs(jerk);
-  max_jerk = jerk;
-}
-
-double Axis::getSpeed()
-{
-  return real_speed;
-}
-
-double Axis::getAcceleration()
-{
-  return _accel;
+  else
+  {
+    return constrain(curr + step, min, curr);
+  }
 }
 
 bool Axis::computeMotionControls(unsigned int time_passed)
 {
   double distance_left = distanceToGo();
-  double dist_to_stop;
+  double dist_to_stop= distanceToStop();
   if ((fabs(distance_left) < min_resolution) or (distance_left == 0)) // Need to stop
   {
     setSpeed(0);
@@ -72,13 +36,14 @@ bool Axis::computeMotionControls(unsigned int time_passed)
   {
     switch (limit_mode)
     {
-    case 2: // Jerk Control Not Implemented
-      setAcceleration(_accel + (_accel / time_passed));
+    case 2:
+      setJerk(distance_left > dist_to_stop ? -target_jerk : target_jerk);
+      setAcceleration(approach(real_accel, -target_accel, target_accel, (cmd_jerk / (time_passed/1000.))));
+      setSpeed(approach(real_speed, -target_speed, target_speed, (cmd_accel / (time_passed/1000.))));
       break;
     case 1:
-      dist_to_stop = distanceToStop();
       setAcceleration(distance_left > dist_to_stop ? target_accel : -target_accel);
-      setSpeed(approach(real_speed, -target_speed, target_speed, (_accel / time_passed)));
+      setSpeed(approach(real_speed, -target_speed, target_speed, (cmd_accel / (time_passed/1000.))));
       break;
     case 0:
       setSpeed(distance_left > 0 ? -target_speed : target_speed);
@@ -88,25 +53,15 @@ bool Axis::computeMotionControls(unsigned int time_passed)
   return _speed_changed;
 }
 
-void Axis::setLimitMode(int mode)
-{
-  limit_mode = mode;
-}
-
 void Axis::computeMotionFeatures(unsigned int time_passed)
 {
   last_speed = real_speed;
-  last_accel = _accel;
+  last_accel = cmd_accel;
 
   double d_p = last_pose - real_pose;
-  real_speed = d_p / time_passed;
+  real_speed = d_p / (time_passed/1000.);
   double d_v = last_speed - real_speed;
-  _accel = d_v / time_passed;
-}
-
-double Axis::distanceToGo()
-{
-  return target_pose - real_pose;
+  real_accel = d_v / (time_passed/1000.);
 }
 
 double Axis::distanceToStop()
@@ -118,7 +73,7 @@ double Axis::distanceToStop()
     break;
 
   case 1:
-    return fabs((real_speed * real_speed) / (2. * _accel));
+    return fabs((real_speed * real_speed) / (2. * real_accel));
     break;
 
   case 2: // Jerk Control Not Implemented
@@ -128,16 +83,6 @@ double Axis::distanceToStop()
   default:
     return 0;
   }
-}
-
-double Axis::targetPosition()
-{
-  return target_pose;
-}
-
-double Axis::currentPosition()
-{
-  return real_pose;
 }
 
 bool Axis::run()
@@ -160,11 +105,6 @@ bool Axis::run()
   return not done;
 }
 
-void Axis::runToPosition()
-{
-  while (run());
-}
-
 void Axis::stop()
 {
   if (getSpeed() > 0)
@@ -178,24 +118,8 @@ void Axis::stop()
 }
 
 void Axis::setPosition(double pose)
+//TODO: Combine with computeMotionFeatures function
 {
   last_pose = real_pose;
   real_pose = pose;
-}
-
-void Axis::setSpeed(double speed)
-{
-  if (cmd_speed != speed)
-  {
-    cmd_speed = speed;
-    _speed_changed = true;
-  }
-}
-void Axis::setAcceleration(double acceleration)
-{
-  if (_accel != acceleration)
-  {
-    _accel = acceleration;
-    _accel_changed = true;
-  }
 }

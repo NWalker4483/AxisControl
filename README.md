@@ -1,6 +1,6 @@
-# Differential Axis Control
+# Differential Axis Control 
 
-Simple abstract classes for single and multi axis speed/acceleration control.
+Simple abstract classes for single and multi axis speed/acceleration control. **In Progress**
 
 ## Setup 
 mkdir build
@@ -13,7 +13,7 @@ sudo make install
 
 |||
 |---|---|
-|<img src="imgs/Differential-drive.png" width= "400">|<img src="imgs/wrists.jpeg" width= "400">|
+|<img src="imgs/Differential-drive.png" width= "300">|<img src="imgs/wrists.jpeg" width= "300">|
 
 This class will instantiate a list of ```Axis``` objects automatically and then the corresponding override functions will allow the same level of control but with the consideration that changes on one Axis may affect other axes.
 
@@ -56,6 +56,9 @@ MyRobot.axis[1].setTargetSpeed(10)// deg/s
 MyRobot.axis[2].setTargetSpeed(4)// deg/s
 
 MyRobot.setLimitMode(1); // Limit Acceleration
+
+// MyRobot.setAllAccelerations(2);
+
 double home_pose[3] = {34, 0, 90};
 MyRobot.moveAllTo(home_pose);
 
