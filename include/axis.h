@@ -18,7 +18,6 @@ public:
   void setTargetJerk(double jerk);
 
   void setResolution(double res);
-  // void setTicksPerSecond(int ticks);
   void setLimitMode(int mode);
 
   bool computeMotionControls(unsigned int time_passed);
@@ -69,7 +68,7 @@ private:
 
   double target_jerk;
   double cmd_jerk;
-  // double last_accel;
+  // double last_jerk;
 
   int limit_mode;
   double min_resolution;

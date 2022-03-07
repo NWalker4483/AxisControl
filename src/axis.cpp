@@ -14,6 +14,7 @@ double approach(double curr, double min, double max, double step)
 {
   // curr should be added to step but with the caveat that it
   // cannot decrease below min and cannot increase above max
+  // Decreasing to a value above max will not cause any constraints and vice versa for increasing to a value below minimum
   if (step > 0)
   {
     return constrain(curr + step, curr, max);
@@ -56,7 +57,7 @@ bool Axis::computeMotionControls(unsigned int time_passed)
 void Axis::computeMotionFeatures(unsigned int time_passed)
 {
   last_speed = real_speed;
-  last_accel = cmd_accel;
+  last_accel = real_accel;
 
   double d_p = last_pose - real_pose;
   real_speed = d_p / (time_passed/1000.);
