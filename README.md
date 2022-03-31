@@ -57,15 +57,11 @@ possible for the motors to move at an appropriate speed
 */
 }
 
+MyRobot.setLimitMode(0);// Default: Limit Speed
+
 MyRobot.axis[0].setTargetSpeed(5)// deg/s
 MyRobot.axis[1].setTargetSpeed(10)// deg/s
 MyRobot.axis[2].setTargetSpeed(4)// deg/s
-
-MyRobot.setLimitMode(1); // Limit Acceleration
-
-MyRobot.axis[0].setTargetAcceleration(2.5) // deg/s^2
-MyRobot.axis[1].setTargetAcceleration(1) // deg/s^2
-MyRobot.axis[2].setTargetAcceleration(3) // deg/s^2
 
 double home_pose[3] = {90, 0, 90};
 double second_pose[3] = {30, 45, 10};
@@ -74,10 +70,22 @@ double jojo_pose[3] = {71, 24, -45};
 MyRobot.moveAllTo(home_pose);
 MyRobot.runToPositions();
 
+MyRobot.setLimitMode(1); // Limit Acceleration
+
+MyRobot.axis[0].setTargetAcceleration(2.5) // deg/s^2
+MyRobot.axis[1].setTargetAcceleration(1) // deg/s^2
+MyRobot.axis[2].setTargetAcceleration(3) // deg/s^2
+
 MyRobot.axis[0].moveTo(second_pose[0]);
 MyRobot.axis[1].moveTo(second_pose[1]);
 MyRobot.axis[2].moveTo(second_pose[2]);
 while (MyRobot.run());
+
+MyRobot.setLimitMode(2); // Limit Jerk NOTE: Work in progress and lots of math so mileage may vary on arduinos
+
+MyRobot.axis[0].setTargetJerk(1.25) // deg/s^2/s
+MyRobot.axis[1].setTargetJerk(.5) // deg/s^2/s
+MyRobot.axis[2].setTargetJerk(1.5) // deg/s^2/s
 
 MyRobot.moveAllTo(jojo_pose);
 MyRobot.runToPositions();
