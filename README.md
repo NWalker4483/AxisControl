@@ -2,6 +2,9 @@
 
 Simple abstract classes for single and multi axis speed/acceleration control. **In Progress**
 
+## TODO: 
+Expand Test Code
+Complete Jerk limiting
 ## Setup 
 mkdir build
 sudo make install 

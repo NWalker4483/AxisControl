@@ -35,12 +35,12 @@ public:
   void stop();
   double getSpeed();
   double getAcceleration();
-  double getJerk(){};
+  double getJerk(){return 1;};
 
   void setPosition(double pose);
 
 protected:
-  virtual unsigned int getTime(){};
+  virtual unsigned int getTime(){return 0;};
   virtual void computePosition(){};
   virtual void updateMotorSpeed(double axis_speed){};
   virtual void pollMotor(){};
