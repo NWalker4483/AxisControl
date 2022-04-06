@@ -3,7 +3,7 @@
 template<size_t axis_cnt>
 bool MultiAxis<axis_cnt>::run()
 {
-  unsigned int curr_time = getTime();
+  unsigned int curr_time = getMicros();
   unsigned int time_passed = curr_time - last_time;
   
   computeAxisPositions(current_positions);

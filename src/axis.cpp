@@ -1,6 +1,6 @@
 #include "axis.h"
 template <typename num>
-num constrain(num val, num min, num max)
+inline num constrain(num val, num min, num max)
 {
   if (val < min)
     return min;
@@ -8,12 +8,15 @@ num constrain(num val, num min, num max)
     return max;
   return val;
 }
+
 template <typename num>
 num approach(num curr, num min, num max, num step)
 {
-  // curr should be added to step but with the caveat that it
-  // cannot decrease below min and cannot increase above max
-  // Decreasing to a value above max will not cause any constraints and vice versa for increasing to a value below minimum
+  /* 
+  curr should be added to step but with the caveat that it
+  cannot decrease below min and cannot increase above max 
+  Decreasing to a value above max will not cause any constraints and vice versa for increasing to a value below minimum
+  */
   if (step > 0)
   {
     return constrain(curr + step, curr, max);
@@ -23,8 +26,9 @@ num approach(num curr, num min, num max, num step)
     return constrain(curr + step, min, curr);
   }
 }
+
 template <typename num>
-num sign(num curr)
+inline num sign(num curr)
 {
   return curr > 0 ? 1 : -1;
 }
@@ -108,7 +112,7 @@ double Axis::distanceToStop()
 
 bool Axis::run()
 {
-  unsigned int curr_time = getTime();
+  unsigned int curr_time = getMicros();
   unsigned int time_passed = curr_time - last_time;
 
   computePosition();

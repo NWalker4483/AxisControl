@@ -40,7 +40,7 @@ public:
   void setPosition(double pose);
 
 protected:
-  virtual unsigned int getTime(){return 0;};
+  virtual unsigned int getMicros(){return 0;};
   virtual void computePosition(){};
   virtual void updateMotorSpeed(double axis_speed){};
   virtual void pollMotor(){};

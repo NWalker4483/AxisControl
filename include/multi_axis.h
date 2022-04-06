@@ -23,7 +23,7 @@ protected:
   double current_positions[axis_cnt];
   double current_speeds[axis_cnt];
 
-  virtual unsigned int getTime() = 0;
+  virtual unsigned int getMicros() = 0;
   virtual void computeAxisPositions(double *axis_positions) = 0;
   virtual void updateMotorSpeeds(double *axis_speeds) = 0;
   virtual void pollMotors(){};
