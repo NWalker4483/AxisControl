@@ -1,21 +1,22 @@
 #include "multi_axis.h"
 #include "iostream"
-const int text_axis = 2; 
+#include<unistd.h>
+using namespace std;
+const int text_axis = 1; 
 class TestBot: public MultiAxis<text_axis>
 {
     public: 
         int t;
-        unsigned int inc = 10;
+        unsigned int inc = 1000;
         unsigned int time;
-        double poses[text_axis];
 
-    TestBot(){
-        // Open Log
-    }
+        TestBot(){
+            // Open Log
+        }
 
-    ~TestBot(){
-        // Close Log
-    }
+        ~TestBot(){
+            // Close Log
+        }
     
     protected:
         unsigned int getMicros() {
@@ -25,24 +26,37 @@ class TestBot: public MultiAxis<text_axis>
 
         void computeAxisPositions(double *axis_position) {
             for (int i = 0; i < text_axis; i++){
-                axis[i].getSpeed();
-                axis[i].getAcceleration();
-                std::cout << text_axis;
+                *(axis_position + i) += axis[i].getCMDSpeed() * ((float)inc/1000.);
             }
         }
 
         void updateMotorSpeeds(double *axis_speeds) {
-            // Log Data
-            std::cout << "1";
+           // Nothin
+        }
+
+        void pollMotors(){
+            cout << "#" << endl;
+            for (int i = 0; i < text_axis; i++){
+            cout << axis[i].currentPosition() << " ";
+            cout << axis[i].getSpeed() << " ";
+            // cout << axis[i].getAcceleration() << " ";
+            // cout << axis[i].getJerk() << " ";
+            cout << endl;
+            }
+        unsigned int microsecond = 1000000;
+        usleep(1 * microsecond);// sleeps for 1 second
         }
 };
 
 int main(int argc, char *argv[]){
     TestBot robot;
-    robot.setLimitMode(1);
-    double moves[2] = {25,25};
+    robot.setLimitMode(0);
+    double moves[text_axis];
+    for (int i = 0; i < text_axis; i++){
+    robot.axis[i].setTargetSpeed(1);
+    moves[i] = -5;
+    }
     robot.moveAll(moves);
-    robot.run();
-    robot.stop();
+    robot.runToPositions();
     return 0; 
 }

@@ -1,4 +1,4 @@
-CXX = g++
+CXX = clang++
 
 SRC_DIR := src
 OBJ_DIR := build
@@ -24,7 +24,7 @@ install: library
 	cp include/* /usr/local/include/axis_control/
 
 examples: library
-	$(CXX) $(CPPFLAGS) -Wl,-rpath,. -o out_file example/main.cpp -L. -laxis_control
+	$(CXX) $(CPPFLAGS) -o test_prog example/main.cpp -L. -laxis_control
 
 .PHONY: list
 list:

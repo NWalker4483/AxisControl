@@ -37,8 +37,16 @@ public:
   double getAcceleration();
   double getJerk(){return 1;};
 
+  double getTargetSpeed(){return target_speed;};
+  double getTargetAcceleration(){return target_accel;};
+  double getTargetJerk(){return target_jerk;};
+
+  // For Debugging
+  double getCMDSpeed(){return cmd_speed;};
+
   void setPosition(double pose);
 
+  double min_resolution;
 protected:
   virtual unsigned int getMicros(){return 0;};
   virtual void computePosition(){};
@@ -71,7 +79,6 @@ private:
   // double last_jerk;
 
   int limit_mode;
-  double min_resolution;
 
   unsigned int last_time;
 
@@ -80,7 +87,7 @@ private:
   bool _accel_changed;
 };
 
-inline void Axis::moveTo(double absolute)
+ void Axis::moveTo(double absolute)
 {
   if (target_pose != absolute)
   {
@@ -89,7 +96,7 @@ inline void Axis::moveTo(double absolute)
   }
 }
 
-inline void Axis::setSpeed(double speed)
+ void Axis::setSpeed(double speed)
 {
   if (cmd_speed != speed)
   {
@@ -98,7 +105,7 @@ inline void Axis::setSpeed(double speed)
   }
 }
 
-inline void Axis::setAcceleration(double acceleration)
+ void Axis::setAcceleration(double acceleration)
 {
   if (cmd_accel != acceleration)
   {
@@ -107,7 +114,7 @@ inline void Axis::setAcceleration(double acceleration)
   }
 }
 
-inline void Axis::setJerk(double jerk)
+ void Axis::setJerk(double jerk)
 {
   if (cmd_jerk != jerk)
   {
@@ -116,61 +123,61 @@ inline void Axis::setJerk(double jerk)
   }
 }
 
-inline void Axis::move(double relative)
+ void Axis::move(double relative)
 {
   moveTo((real_pose + relative));
 }
 
-inline void Axis::setTargetSpeed(double speed)
+ void Axis::setTargetSpeed(double speed)
 {
   speed = fabs(speed);
   target_speed = speed;
 }
 
-inline void Axis::setTargetAcceleration(double acceleration)
+ void Axis::setTargetAcceleration(double acceleration)
 {
   acceleration = fabs(acceleration);
   target_accel = acceleration;
 }
 
-inline void Axis::setTargetJerk(double jerk)
+ void Axis::setTargetJerk(double jerk)
 {
   jerk = fabs(jerk);
   target_jerk = jerk;
 }
 
-inline double Axis::getSpeed()
+ double Axis::getSpeed()
 {
   return real_speed;
 }
 
-inline double Axis::getAcceleration()
+ double Axis::getAcceleration()
 {
-  return cmd_accel;
+  return real_accel;
 }
 
-inline void Axis::setLimitMode(int mode)
+ void Axis::setLimitMode(int mode)
 {
   limit_mode = mode;
 }
 
-inline double Axis::targetPosition()
+ double Axis::targetPosition()
 {
   return target_pose;
 }
 
-inline double Axis::currentPosition()
+ double Axis::currentPosition()
 {
   return real_pose;
 }
 
-inline void Axis::runToPosition()
+ void Axis::runToPosition()
 {
   while (run())
     ;
 }
 
-inline double Axis::distanceToGo()
+ double Axis::distanceToGo()
 {
   return target_pose - real_pose;
 }

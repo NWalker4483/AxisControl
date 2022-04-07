@@ -71,7 +71,7 @@ bool Axis::computeMotionControls(unsigned int time_passed)
       setSpeed(approach(real_speed, -target_speed, target_speed, (cmd_accel / (time_passed / 1000.))));
       break;
     case 0:
-      setSpeed(distance_left > 0 ? -target_speed : target_speed);
+      setSpeed(distance_left < 0 ? -target_speed : target_speed);
       break;
     }
   }
@@ -105,8 +105,6 @@ double Axis::distanceToStop()
     return (real_speed * real_speed) / (2. * target_accel);
     break;
 
-  default:
-    return 0;
   }
 }
 

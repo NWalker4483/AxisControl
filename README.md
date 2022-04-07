@@ -1,10 +1,12 @@
-# Differential Axis Control 
+# Axis Control 
 
 Simple abstract classes for single and multi axis speed/acceleration control. **In Progress**
 
 ## TODO: 
 Expand Test Code
 Complete Jerk limiting
+Use debugger
+
 ## Setup 
 mkdir build
 sudo make install 
