@@ -1,6 +1,6 @@
 #include "multi_axis.h"
 #include "iostream"
-#include<unistd.h>
+#include <unistd.h>
 using namespace std;
 const int text_axis = 1; 
 class TestBot: public MultiAxis<text_axis>
@@ -26,7 +26,7 @@ class TestBot: public MultiAxis<text_axis>
 
         void computeAxisPositions(double *axis_position) {
             for (int i = 0; i < text_axis; i++){
-                *(axis_position + i) += axis[i].getCMDSpeed() * ((float)inc/1000.);
+                *(axis_position + i) = axis[i].currentPosition() + (axis[i].getCMDSpeed() * ((float)inc/1000.));
             }
         }
 
@@ -45,7 +45,7 @@ class TestBot: public MultiAxis<text_axis>
             }
         unsigned int microsecond = 1000000;
         usleep(1 * microsecond);// sleeps for 1 second
-        }
+    }
 };
 
 int main(int argc, char *argv[]){
@@ -54,6 +54,7 @@ int main(int argc, char *argv[]){
     double moves[text_axis];
     for (int i = 0; i < text_axis; i++){
     robot.axis[i].setTargetSpeed(1);
+    // robot.axis[i].setPosition();
     moves[i] = -5;
     }
     robot.moveAll(moves);

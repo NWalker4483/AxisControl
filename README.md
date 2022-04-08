@@ -1,11 +1,6 @@
 # Axis Control 
 
-Simple abstract classes for single and multi axis speed/acceleration control. **In Progress**
-
-## TODO: 
-Expand Test Code
-Complete Jerk limiting
-Use debugger
+Abstract classes for single and multi axis speed/acceleration control. **In Progress**
 
 ## Setup 
 mkdir build
@@ -108,3 +103,9 @@ virtual void computePosition(double *axis_position);
 virtual void updateMotorSpeed(double *axis_speed);
 virtual void pollMotor() {};
 ```
+
+
+## TODO: 
+Expand Test Code
+Complete Jerk limiting
+Use debugger

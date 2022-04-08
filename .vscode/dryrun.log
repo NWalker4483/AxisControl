@@ -1,6 +1,8 @@
 make library --dry-run --keep-going --print-directory
 make: Entering directory `/Users/walkenz1/Projects/AxisControl'
-clang++ -Wall -fPIC -shared -o libaxis_control.so build/axis.o build/multi_axis.o
+clang++ -Wall -o build/axis.o -c src/axis.cpp -Iinclude -fPIC
  
+clang++ -Wall -o build/multi_axis.o -c src/multi_axis.cpp -Iinclude -fPIC
+clang++ -Wall -fPIC -shared -o libaxis_control.so build/axis.o build/multi_axis.o
 make: Leaving directory `/Users/walkenz1/Projects/AxisControl'
  

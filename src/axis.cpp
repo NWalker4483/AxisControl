@@ -96,7 +96,6 @@ double Axis::distanceToStop()
   case 0:
     return 0;
     break;
-
   case 1:
     return (real_speed * real_speed) / (2. * target_accel);
     break;
@@ -104,8 +103,8 @@ double Axis::distanceToStop()
   case 2: // Jerk Control Not Implemented
     return (real_speed * real_speed) / (2. * target_accel);
     break;
-
   }
+  return 0;
 }
 
 bool Axis::run()

@@ -8,11 +8,12 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Thu Apr  7 14:10:22 2022
+# Make data base, printed on Fri Apr  8 12:02:35 2022
 
 # Variables
 
 # automatic
+ 
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
 ?F = $(notdir $?)
@@ -49,7 +50,7 @@ VSCODE_VERBOSE_LOGGING = true
 # environment
 __CFBundleIdentifier = com.microsoft.VSCode
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/yd/0l35cmbd1b1cxls68py0rkj80000gp/T/vscode-ipc-ea065076-a36a-450f-acf1-f463c7ccfc87.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/yd/0l35cmbd1b1cxls68py0rkj80000gp/T/vscode-ipc-ce35f4ec-2182-4182-92fa-c5c3d12e7b0d.sock
 # environment
 VSCODE_CWD = /
 # environment
@@ -61,14 +62,13 @@ ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.E0Ce2z9AgF/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.NDiWAihZQ2/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
 CONDA_EXE = /Users/walkenz1/opt/anaconda3/bin/conda
 # environment
 VSCODE_PIPE_LOGGING = true
- 
 # environment
 PWD = /Users/walkenz1/Projects/AxisControl
 # environment
@@ -84,7 +84,7 @@ VSCODE_CODE_CACHE_PATH = /Users/walkenz1/Library/Application Support/Code/Cached
 # environment
 LOGNAME = walkenz1
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 CONDA_PROMPT_MODIFIER = (base) 
 # environment
@@ -160,13 +160,13 @@ MAKELEVEL := 0
 # environment
 CONDA_PREFIX = /Users/walkenz1/opt/anaconda3
 # environment
-VSCODE_PID = 14510
+VSCODE_PID = 2929
 # environment
 _CE_CONDA = 
 # environment
 LANG = C
 # variable set hash-table stats:
-# Load=76/1024=7%, Rehash=0, Collisions=6/112=5%
+# Load=76/1024=7%, Rehash=0, Collisions=5/112=4%
 
 # Pattern-specific Variable Values
 
@@ -174,10 +174,11 @@ LANG = C
 
 # Directories
 
-# . (device 16777233, inode 1195952): 14 files, no impossibilities.
-# src (device 16777233, inode 1196041): 4 files, no impossibilities.
+ 
+# . (device 16777229, inode 1195952): 13 files, no impossibilities.
+# src (device 16777229, inode 1196041): 4 files, no impossibilities.
 
-# 18 files, no impossibilities in 2 directories.
+# 17 files, no impossibilities in 2 directories.
 
 # Implicit Rules
 
@@ -202,7 +203,7 @@ all: library
 # Not a target:
 src/axis.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-04-07 10:56:57
+#  Last modified 2022-04-08 10:55:32
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -217,7 +218,7 @@ src/axis.cpp:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-04-07 14:06:32
+#  Last modified 2022-04-08 12:02:23
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -225,37 +226,17 @@ Makefile:
 
 # Not a target:
 src/multi_axis.cpp:
-#  Implicit rule search has been done.
-#  Last modified 2022-04-06 09:48:49
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 library: build/axis.o build/multi_axis.o
 #  Implicit rule search has not been done.
-#  Implicit/static pattern stem: `'
 #  File does not exist.
 #  File has been updated.
 #  Needs to be updated (-q is set).
-# automatic
-# @ := library
-# automatic
-# % := 
-# automatic
-# * := 
-# automatic
-# + := build/axis.o build/multi_axis.o
-# automatic
-# | := 
-# automatic
-# < := build/axis.o
-# automatic
-# ^ := build/axis.o build/multi_axis.o
-# automatic
-# ? := build/axis.o build/multi_axis.o
 # variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=1/13=8%
+# Load=0/32=0%, Rehash=0, Collisions=0/5=0%
 #  commands to execute (from `Makefile', line 18):
 	$(CXX) $(CFLAGS) -fPIC -shared -o libaxis_control.so $(OBJ)
 	
@@ -263,11 +244,27 @@ library: build/axis.o build/multi_axis.o
 build/axis.o: src/axis.cpp
 #  Implicit rule search has not been done.
 #  Implicit/static pattern stem: `axis'
-#  Last modified 2022-04-07 10:58:07
+#  File does not exist.
 #  File has been updated.
-#  Successfully updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := build/axis.o
+# automatic
+# % := 
+# automatic
+# * := axis
+# automatic
+# + := src/axis.cpp
+# automatic
+# | := 
+# automatic
+# < := src/axis.cpp
+# automatic
+# ^ := src/axis.cpp
+# automatic
+# ? := src/axis.cpp
 # variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+# Load=8/32=25%, Rehash=0, Collisions=1/15=7%
 #  commands to execute (from `Makefile', line 15):
 	$(CXX) $(CFLAGS) -o $@ -c $< $(CPPFLAGS) -fPIC
 	
@@ -281,11 +278,8 @@ build/axis.o: src/axis.cpp
 build/multi_axis.o: src/multi_axis.cpp
 #  Implicit rule search has not been done.
 #  Implicit/static pattern stem: `multi_axis'
-#  Last modified 2022-04-06 09:49:09
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  Modification time never checked.
+#  File has not been updated.
 #  commands to execute (from `Makefile', line 15):
 	$(CXX) $(CFLAGS) -o $@ -c $< $(CPPFLAGS) -fPIC
 	
@@ -295,7 +289,6 @@ list:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
- 
 #  commands to execute (from `Makefile', line 31):
 	@LC_ALL=C $(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
 	
@@ -320,7 +313,7 @@ install: library
 	
 
 # files hash-table stats:
-# Load=13/1024=1%, Rehash=0, Collisions=0/35=0%
+# Load=13/1024=1%, Rehash=0, Collisions=0/34=0%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -332,6 +325,6 @@ install: library
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Thu Apr  7 14:10:22 2022
+# Finished Make data base on Fri Apr  8 12:02:35 2022
 
  
