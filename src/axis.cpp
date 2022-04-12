@@ -118,7 +118,7 @@ bool Axis::run()
 
   if (_speed_changed)
   {
-    updateMotorSpeed(cmd_speed); // Should take in
+    updateMotorSpeed(cmd_speed); // Should take in -\(`_`)/-
     _speed_changed = false;
   }
 

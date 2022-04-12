@@ -2,7 +2,7 @@
 #include "iostream"
 #include <unistd.h>
 using namespace std;
-const int text_axis = 1; 
+const int text_axis = 7; 
 class TestBot: public MultiAxis<text_axis>
 {
     public: 
@@ -26,7 +26,8 @@ class TestBot: public MultiAxis<text_axis>
 
         void computeAxisPositions(double *axis_position) {
             for (int i = 0; i < text_axis; i++){
-                *(axis_position + i) = axis[i].currentPosition() + (axis[i].getCMDSpeed() * ((float)inc/1000.));
+                double dp = axis[i].currentPosition() + (axis[i].getCMDSpeed() * ((float)inc/1000.));
+                *(axis_position + i) = dp;
             }
         }
 
@@ -44,7 +45,7 @@ class TestBot: public MultiAxis<text_axis>
             cout << endl;
             }
         unsigned int microsecond = 1000000;
-        usleep(1 * microsecond);// sleeps for 1 second
+        usleep(.1 * microsecond);// sleeps for 1 second
     }
 };
 
@@ -55,7 +56,7 @@ int main(int argc, char *argv[]){
     for (int i = 0; i < text_axis; i++){
     robot.axis[i].setTargetSpeed(1);
     // robot.axis[i].setPosition();
-    moves[i] = -5;
+    moves[i] = 5;
     }
     robot.moveAll(moves);
     robot.runToPositions();

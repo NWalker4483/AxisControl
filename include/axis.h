@@ -8,6 +8,8 @@ public:
   Axis()
   {
     min_resolution = 1;
+    real_pose = 0;
+
   };
 
   void moveTo(double absolute);
@@ -57,28 +59,28 @@ protected:
   void setAcceleration(double acceleration);
   void setJerk(double jerk);
 
-  double real_pose;
-  double real_speed;
-  double real_accel;
+  double real_pose = 0;
+  double real_speed = 0;
+  double real_accel = 0;
 
 private:
-  double target_pose;
+  double target_pose = 0;
   // double cmd_pose;
-  double last_pose;
+  double last_pose = 0;
 
-  double target_speed;
-  double cmd_speed;
-  double last_speed;
+  double target_speed = 0;
+  double cmd_speed = 0;
+  double last_speed = 0;
 
-  double target_accel;
-  double cmd_accel;
-  double last_accel;
+  double target_accel = 0;
+  double cmd_accel = 0;
+  double last_accel = 0;
 
-  double target_jerk;
-  double cmd_jerk;
+  double target_jerk = 0;
+  double cmd_jerk = 0;
   // double last_jerk;
 
-  int limit_mode;
+  int limit_mode = 0;
 
   unsigned int last_time;
 
