@@ -85,7 +85,7 @@ bool MultiAxis<axis_cnt>::run()
   for (int i = 0; i < axis_cnt; i++)
   {
     axis[i].setPosition(current_positions[i]);
-    //axis[i].computeMotionFeatures(time_passed);
+    axis[i].computeMotionFeatures(time_passed);
     bool speed_changed = axis[i].computeMotionControls(time_passed); // Consider Returning bool
     current_speeds[i] = axis[i].getCMDSpeed();
     any_speed_changed = any_speed_changed or speed_changed;
