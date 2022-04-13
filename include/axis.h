@@ -37,7 +37,7 @@ public:
   void stop();
   double getSpeed();
   double getAcceleration();
-  double getJerk(){return 1;};
+  double getJerk(){return cmd_jerk;};
 
   double getTargetSpeed(){return target_speed;};
   double getTargetAcceleration(){return target_accel;};

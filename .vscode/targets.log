@@ -6,9 +6,8 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
- 
 
-# Make data base, printed on Tue Apr 12 14:02:29 2022
+# Make data base, printed on Wed Apr 13 09:10:14 2022
 
 # Variables
 
@@ -49,7 +48,7 @@ VSCODE_VERBOSE_LOGGING = true
 # environment
 __CFBundleIdentifier = com.microsoft.VSCode
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/yd/0l35cmbd1b1cxls68py0rkj80000gp/T/vscode-ipc-ab6e0199-4f3e-4454-86ff-12a0b44b2e76.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/yd/0l35cmbd1b1cxls68py0rkj80000gp/T/vscode-ipc-9a18212e-f04c-4170-8f3c-8c3db12506fc.sock
 # environment
 VSCODE_CWD = /
 # environment
@@ -61,7 +60,7 @@ ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.m6F017z9Sz/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.3kPA0xdvuI/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -83,7 +82,7 @@ VSCODE_CODE_CACHE_PATH = /Users/walkenz1/Library/Application Support/Code/Cached
 # environment
 LOGNAME = walkenz1
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 CONDA_PROMPT_MODIFIER = (base) 
 # environment
@@ -106,7 +105,6 @@ MAKE_VERSION := 3.81
 USER = walkenz1
 # makefile
 .DEFAULT_GOAL := all
- 
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # environment
@@ -160,7 +158,7 @@ MAKELEVEL := 0
 # environment
 CONDA_PREFIX = /Users/walkenz1/opt/anaconda3
 # environment
-VSCODE_PID = 22449
+VSCODE_PID = 20524
 # environment
 _CE_CONDA = 
 # environment
@@ -175,9 +173,9 @@ LANG = C
 # Directories
 
 # . (device 16777229, inode 1195952): 15 files, no impossibilities.
-# src (device 16777229, inode 1196041): 4 files, no impossibilities.
+# src (device 16777229, inode 1196041): 5 files, no impossibilities.
 
-# 19 files, no impossibilities in 2 directories.
+# 20 files, no impossibilities in 2 directories.
 
 # Implicit Rules
 
@@ -202,7 +200,7 @@ all: library
 # Not a target:
 src/axis.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-04-12 13:26:12
+#  Last modified 2022-04-13 09:05:50
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -217,7 +215,7 @@ src/axis.cpp:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-04-12 14:02:13
+#  Last modified 2022-04-13 09:03:17
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -257,13 +255,13 @@ library: build/axis.o build/multi_axis.o
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=1/13=8%
 #  commands to execute (from `Makefile', line 18):
-	$(CXX) $(CFLAGS) -fPIC -shared -o libaxis_control.so $(OBJ)
+	$(CXX) $(CFLAGS) -fPIC -shared -g -o libaxis_control.so $(OBJ)
 	
 
 build/axis.o: src/axis.cpp
 #  Implicit rule search has not been done.
 #  Implicit/static pattern stem: `axis'
-#  Last modified 2022-04-12 13:50:27
+#  Last modified 2022-04-13 09:08:10
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -310,6 +308,7 @@ examples: library
 install: library
 #  Implicit rule search has not been done.
 #  Modification time never checked.
+ 
 #  File has not been updated.
 #  commands to execute (from `Makefile', line 21):
 	cp libaxis_control.so /usr/lib
@@ -331,6 +330,6 @@ install: library
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Tue Apr 12 14:02:29 2022
+# Finished Make data base on Wed Apr 13 09:10:14 2022
 
  

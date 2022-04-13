@@ -47,8 +47,8 @@ protected:
         {
             cout << axis[i].currentPosition() << ", ";
             cout << axis[i].getSpeed() << ", ";
-            cout << axis[i].getAcceleration() << " ";
-            // cout << axis[i].getJerk() << " ";
+            cout << axis[i].getAcceleration() << ", ";
+            cout << axis[i].getJerk() << " ";
             cout << endl;
         }
         // unsigned int microsecond = 1000000;
@@ -59,7 +59,7 @@ protected:
 int main(int argc, char *argv[])
 {
     TestBot robot;
-    robot.setLimitMode(0);
+    robot.setLimitMode(1);
     double moves[text_axis];
     for (int i = 0; i < text_axis; i++)
     {

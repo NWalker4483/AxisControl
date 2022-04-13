@@ -83,9 +83,9 @@ void Axis::computeMotionFeatures(unsigned int time_passed)
   last_speed = real_speed;
   last_accel = real_accel;
 
-  double d_p = last_pose - real_pose;
+  double d_p = real_pose - last_pose;
   real_speed = d_p / (time_passed / 1000.);
-  double d_v = last_speed - real_speed;
+  double d_v =  real_speed - last_speed ;
   real_accel = d_v / (time_passed / 1000.);
   return;
 }
@@ -97,6 +97,7 @@ double Axis::distanceToStop()
   case 0:
     return 0;
     break;
+
   case 1:
     return (real_speed * real_speed) / (2. * target_accel);
     break;
