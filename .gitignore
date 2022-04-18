@@ -1,4 +1,5 @@
 *.so
 obj/
 build/
-.vscode
+.vscode/
+*.out*

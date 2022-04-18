@@ -30,7 +30,7 @@ num approach(num curr, num min, num max, num step)
 template <typename num>
 inline num sign(num curr)
 {
-  return curr > 0 ? 1 : -1;
+  return curr >= 0 ? 1 : -1;
 }
 
 bool Axis::computeMotionControls(unsigned int time_passed)
@@ -47,22 +47,22 @@ bool Axis::computeMotionControls(unsigned int time_passed)
   {
     switch (limit_mode)
     {
-    case 2:
-      if (!approaching_target)
-      {
-        setJerk(sign(distance_left) == 1 ? target_jerk : -target_jerk);
-      }
-      else
-      {
-        setJerk(distance_left > dist_to_stop ? -target_jerk : target_jerk);
-      }
-      setAcceleration(approach(real_accel, -target_accel, target_accel, (cmd_jerk / (time_passed / 1000.))));
-      setSpeed(approach(real_speed, -target_speed, target_speed, (cmd_accel / (time_passed / 1000.))));
-      break;
+    // case 2:
+    //   if (!approaching_target)
+    //   {
+    //     setJerk(sign(distance_left) == 1 ? target_jerk : -target_jerk);
+    //   }
+    //   else
+    //   {
+    //     setJerk(distance_left > dist_to_stop ? -target_jerk : target_jerk);
+    //   }
+    //   setAcceleration(approach(real_accel, -target_accel, target_accel, (cmd_jerk / (time_passed / 1000.))));
+    //   setSpeed(approach(real_speed, -target_speed, target_speed, (cmd_accel / (time_passed / 1000.))));
+    //   break;
     case 1:
       if (!approaching_target)
       {
-        setAcceleration(sign(distance_left) == 1 ? target_accel : -target_accel);
+        setAcceleration(distance_left < 0 ? -target_accel : target_accel);
       }
       else
       {
@@ -102,9 +102,9 @@ double Axis::distanceToStop()
     return (real_speed * real_speed) / (2. * target_accel);
     break;
 
-  case 2: // Jerk Control Not Implemented
-    return (real_speed * real_speed) / (2. * target_accel);
-    break;
+  // case 2: // Jerk Control Not Implemented
+  //   return (real_speed * real_speed) / (2. * target_accel);
+  //   break;
   }
   return 0;
 }

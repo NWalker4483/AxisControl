@@ -7,7 +7,7 @@ class TestBot : public MultiAxis<text_axis>
 {
 public:
     int t;
-    unsigned int inc = 10;
+    unsigned int inc = 1000;
     unsigned int time = 0;
 
     TestBot()
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
     {
         robot.axis[i].setTargetSpeed(5);
         robot.axis[i].setTargetAcceleration(.5);
-        moves[i] = 25;
+        moves[i] = 50;
     }
     robot.moveAll(moves);
     robot.runToPositions();
