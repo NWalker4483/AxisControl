@@ -31,7 +31,7 @@ protected:
     {
         for (int i = 0; i < text_axis; i++)
         {
-            *(axis_position + i) = axis[i].currentPosition() + (axis[i].getCMDSpeed() * ((float)inc / 1000.));
+            *(axis_position + i) = axis[i].currentPosition() + (axis[i].getCMDSpeed() * ((double)inc / 1000.));
         }
     }
 
@@ -63,9 +63,10 @@ int main(int argc, char *argv[])
     double moves[text_axis];
     for (int i = 0; i < text_axis; i++)
     {
-        robot.axis[i].setTargetSpeed(5);
-        robot.axis[i].setTargetAcceleration(.5);
-        moves[i] = 50;
+        // Signs of Targets are autocorrected as neccesarry to reach
+        robot.axis[i].setTargetSpeed(-5);
+        robot.axis[i].setTargetAcceleration(-.5);
+        moves[i] = -25;
     }
     robot.moveAll(moves);
     robot.runToPositions();

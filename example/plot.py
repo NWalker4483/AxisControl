@@ -11,13 +11,14 @@ with open("data.txt","r") as f:
             lines[2].append(acc)
             lines[3].append(jerk)
 
-plt.plot(range(len(lines[0])), lines[0])
+plt.plot(range(len(lines[0])), lines[0], label='Position')
 
-plt.plot(range(len(lines[0])), lines[1])
+plt.plot(range(len(lines[0])), lines[1], label='Speed')
 
-plt.plot(range(len(lines[0])), lines[2])
+plt.plot(range(len(lines[0])), lines[2], label='Acceleration')
 
-plt.plot(range(len(lines[0])), lines[3])
+plt.plot(range(len(lines[0])), lines[3], label='Jerk')
 
+plt.legend(loc='lower left', frameon=False)
 
 plt.show()

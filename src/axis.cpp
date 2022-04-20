@@ -1,4 +1,6 @@
 #include "axis.h"
+#include "iostream"
+
 template <typename num>
 inline num constrain(num val, num min, num max)
 {
@@ -12,9 +14,9 @@ inline num constrain(num val, num min, num max)
 template <typename num>
 num approach(num curr, num min, num max, num step)
 {
-  /* 
+  /*
   curr should be added to step but with the caveat that it
-  cannot decrease below min and cannot increase above max 
+  cannot decrease below min and cannot increase above max
   Decreasing to a value above max will not cause any constraints and vice versa for increasing to a value below minimum
   */
   if (step > 0)
@@ -30,35 +32,43 @@ num approach(num curr, num min, num max, num step)
 template <typename num>
 inline num sign(num curr)
 {
-  return curr >= 0 ? 1 : -1;
+  return curr >= 0 ? 1L : -1L;
 }
+/*
 
+Target ERROR Locations:
+ * Axis::computeMotionControls(unsigned int time_passed)
+
+*/
 bool Axis::computeMotionControls(unsigned int time_passed)
 {
   double distance_left = distanceToGo();
-  double dist_to_stop = fabs(distanceToStop());
-  // current pose dist to stop
+  double dist_to_stop = distanceToStop();
   bool approaching_target = sign(dist_to_stop) == sign(distance_left);
-    if ((fabs(distance_left) < min_resolution) or (distance_left == 0)) // Need to stop
-    {
-      setSpeed(0);
-    }
+
+  // std::cout << sign(dist_to_stop) << approaching_target << std::endl;
+
+  if ((fabs(distance_left) < min_resolution) or (distance_left == 0)) // Need to stop
+  {
+    setSpeed(0);
+  }
   else
   {
     switch (limit_mode)
     {
-    // case 2:
-    //   if (!approaching_target)
-    //   {
-    //     setJerk(sign(distance_left) == 1 ? target_jerk : -target_jerk);
-    //   }
-    //   else
-    //   {
-    //     setJerk(distance_left > dist_to_stop ? -target_jerk : target_jerk);
-    //   }
-    //   setAcceleration(approach(real_accel, -target_accel, target_accel, (cmd_jerk / (time_passed / 1000.))));
-    //   setSpeed(approach(real_speed, -target_speed, target_speed, (cmd_accel / (time_passed / 1000.))));
-    //   break;
+    /* case 2:
+       if (!approaching_target)
+       {
+         setJerk(sign(distance_left) == 1 ? target_jerk : -target_jerk);
+       }
+       else
+       {
+         setJerk(distance_left > dist_to_stop ? -target_jerk : target_jerk);
+       }
+       setAcceleration(approach(real_accel, -target_accel, target_accel, (cmd_jerk / (time_passed / 1000.))));
+       setSpeed(approach(real_speed, -target_speed, target_speed, (cmd_accel / (time_passed / 1000.))));
+       break;
+    */
     case 1:
       if (!approaching_target)
       {
@@ -66,9 +76,9 @@ bool Axis::computeMotionControls(unsigned int time_passed)
       }
       else
       {
-        setAcceleration(distance_left > dist_to_stop ? target_accel : -target_accel);
+        setAcceleration(fabs(distance_left) > fabs(dist_to_stop) ? target_accel : -target_accel);
       }
-      setSpeed(approach(real_speed, -target_speed, target_speed, (cmd_accel / (time_passed / 1000.))));
+      setSpeed(approach(real_speed, -target_speed, target_speed, (1000L * cmd_accel) / time_passed));
       break;
     case 0:
       setSpeed(distance_left < 0 ? -target_speed : target_speed);
@@ -82,11 +92,10 @@ void Axis::computeMotionFeatures(unsigned int time_passed)
 {
   last_speed = real_speed;
   last_accel = real_accel;
-
   double d_p = real_pose - last_pose;
-  real_speed = d_p / (time_passed / 1000.);
-  double d_v =  real_speed - last_speed ;
-  real_accel = d_v / (time_passed / 1000.);
+  real_speed = (1000L * d_p) / time_passed;
+  double d_v = real_speed - last_speed;
+  real_accel = (1000L * d_v) / time_passed;
   return;
 }
 
@@ -99,12 +108,12 @@ double Axis::distanceToStop()
     break;
 
   case 1:
-    return (real_speed * real_speed) / (2. * target_accel);
+    return ((real_speed * real_speed) / (2L * target_accel)) * sign(real_speed);
     break;
 
-  // case 2: // Jerk Control Not Implemented
-  //   return (real_speed * real_speed) / (2. * target_accel);
-  //   break;
+    // case 2: // Jerk Control Not Implemented
+    //   return (real_speed * real_speed) / (2. * target_accel);
+    //   break;
   }
   return 0;
 }
