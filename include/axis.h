@@ -34,16 +34,18 @@ public:
   void runToPosition();
 
   void stop();
-  double getSpeed();
+  double getSpeed() {return real_speed;};
   double getAcceleration(){ return real_accel; };
-  double getJerk() { return cmd_jerk; };
+  double getJerk() { return real_jerk; };
 
   double getTargetSpeed() { return target_speed; };
   double getTargetAcceleration() { return target_accel; };
   double getTargetJerk() { return target_jerk; };
 
   // For Debugging
-  double getCMDSpeed() { return cmd_speed; };
+  double getCMDAccel() { return cmd_accel;};
+  double getCMDSpeed() { return cmd_speed;};
+  double getCMDJerk() { return cmd_jerk;};
 
   void setPosition(double pose);
 
@@ -62,6 +64,7 @@ protected:
   double real_pose = 0;
   double real_speed = 0;
   double real_accel = 0;
+  double real_jerk = 0;
 
 private:
   double target_pose = 0;
@@ -146,11 +149,6 @@ void Axis::setTargetJerk(double jerk)
 {
   jerk = fabs(jerk);
   target_jerk = jerk;
-}
-
-double Axis::getSpeed()
-{
-  return real_speed;
 }
 
 void Axis::setLimitMode(int mode)

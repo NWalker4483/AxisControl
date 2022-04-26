@@ -7,7 +7,7 @@ class TestBot : public MultiAxis<text_axis>
 {
 public:
     int t;
-    unsigned int inc = 1000;
+    unsigned int inc = 10;
     unsigned int time = 0;
 
     TestBot()
@@ -31,7 +31,7 @@ protected:
     {
         for (int i = 0; i < text_axis; i++)
         {
-            *(axis_position + i) = axis[i].currentPosition() + (axis[i].getCMDSpeed() * ((double)inc / 1000.));
+            *(axis_position + i) = axis[i].currentPosition() + (axis[i].getCMDSpeed() * ((double)inc / 1000L));
         }
     }
 
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
         // Signs of Targets are autocorrected as neccesarry to reach
         robot.axis[i].setTargetSpeed(-5);
         robot.axis[i].setTargetAcceleration(-.5);
-        moves[i] = -120;
+        moves[i] = 100;
     }
     robot.moveAll(moves);
     robot.runToPositions();
