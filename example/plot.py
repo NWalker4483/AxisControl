@@ -19,9 +19,9 @@ plt.plot(range(len(lines[0])), lines[1], label='Speed')
 
 plt.plot(range(len(lines[0])), lines[2], label='Acceleration')
 
-lines[3][lines[3] > 50] = 50
-lines[3][lines[3] < -50] = -50
-plt.plot(range(len(lines[0])), lines[3], label='Jerk')
+lines[3][lines[3] > 100] = 100
+lines[3][lines[3] < -100] = -100
+# plt.plot(range(len(lines[0])), lines[3], label='Jerk')
 
 plt.legend(loc='lower left', frameon=False)
 

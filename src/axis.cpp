@@ -34,12 +34,7 @@ inline num sign(num curr)
 {
   return curr >= 0 ? 1L : -1L;
 }
-/*
 
-Target ERROR Locations:
- * Axis::computeMotionControls(unsigned int time_passed)
-
-*/
 bool Axis::computeMotionControls( int time_passed)
 {
   double distance_left = distanceToGo();
@@ -80,7 +75,7 @@ bool Axis::computeMotionControls( int time_passed)
 
         setAcceleration(accel_dir * (fabs(distance_left) > fabs(dist_to_stop) ? target_accel : -target_accel)); //Consider direction of target
       }
-      setSpeed(approach(real_speed, -target_speed, target_speed, cmd_accel / (1000/ time_passed)));
+      setSpeed(approach(real_speed, -target_speed, target_speed, cmd_accel / (1000/time_passed)));
       break;
     case 0:
       setSpeed(distance_left < 0 ? -target_speed : target_speed);
@@ -97,14 +92,13 @@ void Axis::computeMotionFeatures(int time_passed)
   // last_jerk = real_jerk;
 
   double d_p = real_pose - last_pose;
-  real_speed = d_p * (1000/time_passed);
+  real_speed = d_p * (1000L/time_passed);
 
   double d_v = real_speed - last_speed;
-  real_accel = d_v * (1000/time_passed);
+  real_accel = d_v * (1000L/time_passed);
 
   double d_a = real_accel - last_accel;
-  real_jerk = d_a * (1000/time_passed);
-  return;
+  real_jerk = d_a * (1000L/time_passed);
 }
 
 double Axis::distanceToStop()

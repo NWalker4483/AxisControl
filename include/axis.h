@@ -7,7 +7,7 @@ class Axis
 public:
   Axis()
   {
-    min_resolution = 1;
+    min_resolution = .5;
     real_pose = 0;
   };
 
@@ -21,8 +21,8 @@ public:
   void setResolution(double res);
   void setLimitMode(int mode);
 
-  bool computeMotionControls( int time_passed);
-  void computeMotionFeatures( int time_passed);
+  bool computeMotionControls(int time_passed);
+  void computeMotionFeatures(int time_passed);
 
   double distanceToGo();
   double distanceToStop();

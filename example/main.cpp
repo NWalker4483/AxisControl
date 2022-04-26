@@ -51,8 +51,6 @@ protected:
             cout << axis[i].getJerk() << " ";
             cout << endl;
         }
-        // unsigned int microsecond = 1000000;
-        // usleep(.01 * microsecond);// sleeps for 1 second
     }
 };
 
@@ -66,9 +64,28 @@ int main(int argc, char *argv[])
         // Signs of Targets are autocorrected as neccesarry to reach
         robot.axis[i].setTargetSpeed(-5);
         robot.axis[i].setTargetAcceleration(-.5);
-        moves[i] = 100;
+        moves[i] = -100;
     }
     robot.moveAll(moves);
     robot.runToPositions();
+    for (int i = 0; i < 1000; i++)
+    {
+        robot.run();
+    }
+    
+    for (int i = 0; i < text_axis; i++)
+    {
+        // Signs of Targets are autocorrected as neccesarry to reach
+        robot.axis[i].setTargetSpeed(-10);
+        robot.axis[i].setTargetAcceleration(-.25);
+        moves[i] = 50;
+    }
+    robot.moveAll(moves);
+    robot.runToPositions();
+
+    for (int i = 0; i < 1000; i++)
+    {
+        robot.run();
+    }
     return 0;
 }
