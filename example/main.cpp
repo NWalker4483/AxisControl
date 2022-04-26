@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
         // Signs of Targets are autocorrected as neccesarry to reach
         robot.axis[i].setTargetSpeed(-5);
         robot.axis[i].setTargetAcceleration(-.5);
-        moves[i] = -25;
+        moves[i] = -120;
     }
     robot.moveAll(moves);
     robot.runToPositions();

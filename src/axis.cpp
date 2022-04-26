@@ -40,7 +40,7 @@ Target ERROR Locations:
  * Axis::computeMotionControls(unsigned int time_passed)
 
 */
-bool Axis::computeMotionControls(unsigned int time_passed)
+bool Axis::computeMotionControls( int time_passed)
 {
   double distance_left = distanceToGo();
   double dist_to_stop = distanceToStop();
@@ -76,7 +76,9 @@ bool Axis::computeMotionControls(unsigned int time_passed)
       }
       else
       {
-        setAcceleration(fabs(distance_left) > fabs(dist_to_stop) ? target_accel : -target_accel);
+        int accel_dir = currentPosition() > targetPosition() ? -1 : 1;// Direction of acceleration
+
+        setAcceleration(accel_dir * (fabs(distance_left) > fabs(dist_to_stop) ? target_accel : -target_accel)); //Consider direction of target
       }
       setSpeed(approach(real_speed, -target_speed, target_speed, (1000L * cmd_accel) / time_passed));
       break;
@@ -88,7 +90,7 @@ bool Axis::computeMotionControls(unsigned int time_passed)
   return _speed_changed;
 }
 
-void Axis::computeMotionFeatures(unsigned int time_passed)
+void Axis::computeMotionFeatures(int time_passed)
 {
   last_speed = real_speed;
   last_accel = real_accel;
@@ -121,7 +123,7 @@ double Axis::distanceToStop()
 bool Axis::run()
 {
   unsigned int curr_time = getMicros();
-  unsigned int time_passed = curr_time - last_time;
+  int time_passed = curr_time - last_time;
 
   computePosition();
   computeMotionFeatures(time_passed);

@@ -21,8 +21,8 @@ public:
   void setResolution(double res);
   void setLimitMode(int mode);
 
-  bool computeMotionControls(unsigned int time_passed);
-  void computeMotionFeatures(unsigned int time_passed);
+  bool computeMotionControls( int time_passed);
+  void computeMotionFeatures( int time_passed);
 
   double distanceToGo();
   double distanceToStop();

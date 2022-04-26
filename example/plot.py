@@ -21,4 +21,5 @@ plt.plot(range(len(lines[0])), lines[3], label='Jerk')
 
 plt.legend(loc='lower left', frameon=False)
 
-plt.show()
+plt.savefig('foo.png')
+# plt.show()
