@@ -24,7 +24,7 @@ install: library
 	cp include/* /usr/local/include/axis_control/
 
 examples: library
-	$(CXX) $(CPPFLAGS) -g -o a.out example/main.cpp -L. -laxis_control
+	$(CXX) $(CPPFLAGS) -g -o a.out examples/main.cpp -L. -laxis_control
 
 .PHONY: list
 list:

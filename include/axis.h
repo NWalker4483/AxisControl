@@ -34,25 +34,25 @@ public:
   void runToPosition();
 
   void stop();
-  double getSpeed() {return real_speed;};
-  double getAcceleration(){ return real_accel; };
+
+  double getSpeed() { return real_speed; };
+  double getAcceleration() { return real_accel; };
   double getJerk() { return real_jerk; };
 
   double getTargetSpeed() { return target_speed; };
   double getTargetAcceleration() { return target_accel; };
   double getTargetJerk() { return target_jerk; };
 
-  // For Debugging
-  double getCMDAccel() { return cmd_accel;};
-  double getCMDSpeed() { return cmd_speed;};
-  double getCMDJerk() { return cmd_jerk;};
+  double getCMDAccel() { return cmd_accel; };
+  double getCMDSpeed() { return cmd_speed; };
+  double getCMDJerk() { return cmd_jerk; };
 
   void setPosition(double pose);
 
   double min_resolution;
 
 protected:
-  virtual unsigned int getMicros() { return 0; };
+  virtual unsigned int getMillis() { return 0; };
   virtual void computePosition(){};
   virtual void updateMotorSpeed(double axis_speed){};
   virtual void pollMotor(){};
@@ -81,7 +81,7 @@ private:
 
   double target_jerk = 0;
   double cmd_jerk = 0;
-  // double last_jerk;
+  double last_jerk = 0;
 
   int limit_mode = 0;
 
@@ -135,20 +135,18 @@ void Axis::move(double relative)
 
 void Axis::setTargetSpeed(double speed)
 {
-  speed = fabs(speed);
-  target_speed = speed;
+  target_speed = fabs(speed);
+  ;
 }
 
 void Axis::setTargetAcceleration(double acceleration)
 {
-  acceleration = fabs(acceleration);
-  target_accel = acceleration;
+  target_accel = fabs(acceleration);;
 }
 
 void Axis::setTargetJerk(double jerk)
 {
-  jerk = fabs(jerk);
-  target_jerk = jerk;
+  target_jerk = fabs(jerk);
 }
 
 void Axis::setLimitMode(int mode)
@@ -176,4 +174,10 @@ double Axis::distanceToGo()
 {
   return target_pose - real_pose;
 }
+
+void Axis::stop()
+{
+  move(distanceToStop());
+}
+
 #endif

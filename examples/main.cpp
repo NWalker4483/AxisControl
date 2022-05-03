@@ -12,16 +12,14 @@ public:
 
     TestBot()
     {
-        // Open Log
     }
 
     ~TestBot()
     {
-        // Close Log
     }
 
 protected:
-    unsigned int getMicros()
+    unsigned int getMillis()
     {
         time += inc;
         return time;
@@ -29,6 +27,7 @@ protected:
 
     void computeAxisPositions(double *axis_position)
     {
+
         for (int i = 0; i < text_axis; i++)
         {
             *(axis_position + i) = axis[i].currentPosition() + (axis[i].getCMDSpeed() * ((double)inc / 1000L));
@@ -64,7 +63,7 @@ int main(int argc, char *argv[])
         // Signs of Targets are autocorrected as neccesarry to reach
         robot.axis[i].setTargetSpeed(-5);
         robot.axis[i].setTargetAcceleration(-.5);
-        moves[i] = -100;
+        moves[i] = -25;
     }
     robot.moveAll(moves);
     robot.runToPositions();
@@ -72,13 +71,13 @@ int main(int argc, char *argv[])
     {
         robot.run();
     }
-    
+
     for (int i = 0; i < text_axis; i++)
     {
         // Signs of Targets are autocorrected as neccesarry to reach
         robot.axis[i].setTargetSpeed(-10);
         robot.axis[i].setTargetAcceleration(-.25);
-        moves[i] = 50;
+        moves[i] = 25;
     }
     robot.moveAll(moves);
     robot.runToPositions();

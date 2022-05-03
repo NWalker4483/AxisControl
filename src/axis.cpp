@@ -41,8 +41,6 @@ bool Axis::computeMotionControls( int time_passed)
   double dist_to_stop = distanceToStop();
   bool approaching_target = sign(dist_to_stop) == sign(distance_left);
 
-  // std::cout << sign(dist_to_stop) << approaching_target << std::endl;
-
   if ((fabs(distance_left) < min_resolution) or (distance_left == 0)) // Need to stop
   {
     setSpeed(0);
@@ -89,7 +87,7 @@ void Axis::computeMotionFeatures(int time_passed)
 {
   last_speed = real_speed;
   last_accel = real_accel;
-  // last_jerk = real_jerk;
+  last_jerk = real_jerk;
 
   double d_p = real_pose - last_pose;
   real_speed = d_p * (1000L/time_passed);
@@ -122,7 +120,7 @@ double Axis::distanceToStop()
 
 bool Axis::run()
 {
-  unsigned int curr_time = getMicros();
+  unsigned int curr_time = getMillis();
   int time_passed = curr_time - last_time;
 
   computePosition();
@@ -140,11 +138,6 @@ bool Axis::run()
 
   bool done = cmd_speed == 0;
   return not done;
-}
-
-void Axis::stop()
-{
-  move(distanceToStop());
 }
 
 void Axis::setPosition(double pose)

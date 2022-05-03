@@ -8,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Tue Apr 26 15:59:01 2022
+# Make data base, printed on Mon May  2 16:27:11 2022
 
 # Variables
 
@@ -51,7 +51,7 @@ __CFBundleIdentifier = com.microsoft.VSCode
 # environment
 INFOPATH = /opt/homebrew/share/info:
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/yd/0l35cmbd1b1cxls68py0rkj80000gp/T/vscode-ipc-a2c8098e-d5d6-4268-b77f-5e660ad08a74.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/yd/0l35cmbd1b1cxls68py0rkj80000gp/T/vscode-ipc-e32d7e7d-23ce-40fc-b7dc-643d7449af4d.sock
 # environment
 VSCODE_CWD = /
 # environment
@@ -63,7 +63,7 @@ ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.5xF3ryjPFC/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.WlwWge3buh/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -73,7 +73,6 @@ VSCODE_PIPE_LOGGING = true
 # environment
 PWD = /Users/walkenz1/Projects/AxisControl
 # environment
- 
 HOMEBREW_CELLAR = /opt/homebrew/Cellar
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = undefined
@@ -170,7 +169,7 @@ MAKELEVEL := 0
 # environment
 CONDA_PREFIX = /Users/walkenz1/opt/anaconda3
 # environment
-VSCODE_PID = 1205
+VSCODE_PID = 2736
 # environment
 _CE_CONDA = 
 # environment
@@ -184,10 +183,10 @@ LANG = C
 
 # Directories
 
-# . (device 16777229, inode 1195952): 19 files, no impossibilities.
-# src (device 16777229, inode 1196041): 4 files, no impossibilities.
+# . (device 16777230, inode 1195952): 18 files, no impossibilities.
+# src (device 16777230, inode 1196041): 4 files, no impossibilities.
 
-# 23 files, no impossibilities in 2 directories.
+# 22 files, no impossibilities in 2 directories.
 
 # Implicit Rules
 
@@ -212,7 +211,7 @@ all: library
 # Not a target:
 src/axis.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-04-26 14:07:33
+#  Last modified 2022-04-28 15:41:09
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -227,7 +226,8 @@ src/axis.cpp:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-04-14 07:51:32
+#  Last modified 2022-04-28 14:43:30
+ 
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -273,7 +273,7 @@ library: build/axis.o build/multi_axis.o
 build/axis.o: src/axis.cpp
 #  Implicit rule search has not been done.
 #  Implicit/static pattern stem: `axis'
-#  Last modified 2022-04-26 14:07:35
+#  Last modified 2022-04-28 15:41:12
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -291,7 +291,7 @@ build/axis.o: src/axis.cpp
 build/multi_axis.o: src/multi_axis.cpp
 #  Implicit rule search has not been done.
 #  Implicit/static pattern stem: `multi_axis'
-#  Last modified 2022-04-12 13:50:27
+#  Last modified 2022-04-28 15:38:25
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -314,7 +314,7 @@ examples: library
 #  Modification time never checked.
 #  File has not been updated.
 #  commands to execute (from `Makefile', line 27):
-	$(CXX) $(CPPFLAGS) -g -o a.out example/main.cpp -L. -laxis_control
+	$(CXX) $(CPPFLAGS) -g -o a.out examples/main.cpp -L. -laxis_control
 	
 
 install: library
@@ -341,6 +341,6 @@ install: library
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Tue Apr 26 15:59:01 2022
+# Finished Make data base on Mon May  2 16:27:11 2022
 
  

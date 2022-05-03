@@ -27,7 +27,7 @@ class MyRobot: MultiAxis<3>{
     PID motor[3];
     joint_sensor[3];
 
-unsigned int getMicros() override {};
+unsigned int getMillis() override {};
 /* If the time passed since isn't passed into the run function then this allows the 
 object to grab how many units of time passed since the program started and compute speed + acceleration. 
             e.g millis();
@@ -98,7 +98,7 @@ MyRobot.runToPositions();
 /*
  These functions work basically the same as the ones I described above but for a single access it's not necessary to try and override these if you just want to use the MultiAxis class. 
 */
-virtual unsigned int getMicros();
+virtual unsigned int getMillis();
 virtual void computePosition(double *axis_position);
 virtual void updateMotorSpeed(double *axis_speed);
 virtual void pollMotor() {};
