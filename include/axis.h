@@ -8,15 +8,14 @@ public:
   Axis()
   {
     min_resolution = .5;
-    real_pose = 0;
   };
 
   void moveTo(double absolute);
   void move(double relative);
 
-  void setTargetSpeed(double speed);
-  void setTargetAcceleration(double acceleration);
-  void setTargetJerk(double jerk);
+  void setTargetSpeed(double speed) { target_speed = fabs(speed); };
+  void setTargetAcceleration(double acceleration) { target_accel = fabs(acceleration); };
+  void setTargetJerk(double jerk) { target_jerk = fabs(jerk); };
 
   void setResolution(double res) { min_resolution = fabs(res); };
   void setLimitMode(int mode) { limit_mode = mode; };
@@ -28,7 +27,7 @@ public:
   double distanceToStop();
 
   double targetPosition();
-  double currentPosition();
+  double currentPosition() { return real_pose; };
 
   bool run();
   bool run(int time_passed);
@@ -50,8 +49,6 @@ public:
   double getCMDSpeed() { return cmd_speed; };
   double getCMDJerk() { return cmd_jerk; };
 
-  double min_resolution;
-
 protected:
   virtual unsigned int getMillis() { return 0; };
   virtual void computePosition(){};
@@ -66,6 +63,8 @@ protected:
   double real_speed = 0;
   double real_accel = 0;
   double real_jerk = 0;
+
+  double min_resolution;
 
 private:
   double target_pose = 0;
@@ -144,31 +143,9 @@ void Axis::move(double relative)
   moveTo((real_pose + relative));
 }
 
-void Axis::setTargetSpeed(double speed)
-{
-  target_speed = fabs(speed);
-  ;
-}
-
-void Axis::setTargetAcceleration(double acceleration)
-{
-  target_accel = fabs(acceleration);
-  ;
-}
-
-void Axis::setTargetJerk(double jerk)
-{
-  target_jerk = fabs(jerk);
-}
-
 double Axis::targetPosition()
 {
   return target_pose;
-}
-
-double Axis::currentPosition()
-{
-  return real_pose;
 }
 
 void Axis::runToPosition()

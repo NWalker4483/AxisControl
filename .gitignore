@@ -3,6 +3,7 @@ obj/
 build/
 .vscode/
 *.out*
+*.out
 *.dSYM/
 *.out
 data.txt

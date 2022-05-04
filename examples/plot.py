@@ -1,3 +1,4 @@
+from turtle import color
 import matplotlib.pyplot as plt
 import numpy as np 
 
@@ -13,11 +14,15 @@ with open("data.txt","r") as f:
             lines[2].append(acc)
             lines[3].append(jerk)
 lines = np.array(lines)
+
+plt.plot(range(len(lines[0])), np.zeros_like(lines[2]), label='Zero', color="black")
+
 plt.plot(range(len(lines[0])), lines[0], label='Position')
 
 plt.plot(range(len(lines[0])), lines[1], label='Speed')
 
 plt.plot(range(len(lines[0])), lines[2], label='Acceleration')
+
 
 lines[3][lines[3] > 100] = 100
 lines[3][lines[3] < -100] = -100
