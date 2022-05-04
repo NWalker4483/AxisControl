@@ -73,7 +73,7 @@ void MultiAxis<axis_cnt>::moveAll(double (&relative)[axis_cnt])
     axis[i].move(relative[i]);
 }
 
-///////////////////////////////////////
+/*run*/
 template <size_t axis_cnt>
 bool MultiAxis<axis_cnt>::run()
 {
@@ -84,13 +84,18 @@ bool MultiAxis<axis_cnt>::run()
 
   bool any_speed_changed = false;
 
+  double old_speed, new_speed;
+
   for (int i = 0; i < axis_cnt; i++)
   {
     axis[i].setPosition(current_positions[i]);
-    axis[i].computeMotionFeatures(time_passed);
-    bool speed_changed = axis[i].computeMotionControls(time_passed); // Consider Returning bool
-    current_speeds[i] = axis[i].getCMDSpeed();
-    any_speed_changed = any_speed_changed or speed_changed;
+
+    old_speed = axis[i].getCMDSpeed();
+    axis[i].run(time_passed);
+    new_speed = axis[i].getCMDSpeed();
+
+    any_speed_changed = any_speed_changed or (new_speed != old_speed);
+    current_speeds[i] = new_speed;
   }
   if (any_speed_changed)
   {

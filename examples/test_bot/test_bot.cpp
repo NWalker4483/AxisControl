@@ -72,19 +72,19 @@ int main(int argc, char *argv[])
         robot.run();
     }
 
-    for (int i = 0; i < text_axis; i++)
-    {
-        // Signs of Targets are autocorrected as neccesarry to reach
-        robot.axis[i].setTargetSpeed(-10);
-        robot.axis[i].setTargetAcceleration(-.25);
-        moves[i] = 25;
-    }
-    robot.moveAll(moves);
-    robot.runToPositions();
+    // for (int i = 0; i < text_axis; i++)
+    // {
+    //     // Signs of Targets are autocorrected as neccesarry to reach
+    //     robot.axis[i].setTargetSpeed(-10);
+    //     robot.axis[i].setTargetAcceleration(-.25);
+    //     moves[i] = 25;
+    // }
+    // robot.moveAll(moves);
+    // robot.runToPositions();
 
-    for (int i = 0; i < 1000; i++)
-    {
-        robot.run();
-    }
+    // for (int i = 0; i < 1000; i++)
+    // {
+    //     robot.run();
+    // }
     return 0;
 }

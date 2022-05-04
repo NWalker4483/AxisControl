@@ -19,6 +19,7 @@ public:
         dir_pin = dir;
         pinMode(pulse_pin, OUTPUT);
         pinMode(dir_pin, OUTPUT);
+        setResolution(0);
     }
 
     unsigned int getMillis()
@@ -26,22 +27,22 @@ public:
         return millis();
     }
 
-    void computePosition(double *axis_position)
+    void computePosition()
     {
-        *(axis_position) = steps_taken;
+        setPosition(steps_taken);
     }
 
-    void updateMotorSpeed(double *axis_speed)
+    void updateMotorSpeed(double axis_speed)
     {
-        curr_dir = *(axis_speed) > 0 ? HIGH : LOW;
+        curr_dir = axis_speed > 0 ? HIGH : LOW;
         digitalWrite(dir_pin, curr_dir);
-        pulse_width = (1000 * (*(axis_speed))) / 2;
+        pulse_width = (1000 * (axis_speed)) / 2;
     }
 
     void pollMotor()
     {
         unsigned int curr_time = millis();
-        if ((curr_time - last_switch) >= pulse_width)// 50% duty cycle
+        if ((curr_time - last_switch) >= pulse_width) // 50% duty cycle
         {
             if (curr_state == HIGH)
             {

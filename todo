@@ -1,0 +1,2 @@
+Reduce `fabs` calls 
+Check for unecessary double divisions 

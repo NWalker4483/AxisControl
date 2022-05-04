@@ -18,22 +18,25 @@ public:
   void setTargetAcceleration(double acceleration);
   void setTargetJerk(double jerk);
 
-  void setResolution(double res);
-  void setLimitMode(int mode);
+  void setResolution(double res) { min_resolution = fabs(res); };
+  void setLimitMode(int mode) { limit_mode = mode; };
 
   bool computeMotionControls(int time_passed);
   void computeMotionFeatures(int time_passed);
 
-  double distanceToGo();
+  double distanceToGo() { return target_pose - real_pose; }
   double distanceToStop();
 
   double targetPosition();
   double currentPosition();
 
   bool run();
+  bool run(int time_passed);
   void runToPosition();
 
   void stop();
+
+  void setPosition(double position);
 
   double getSpeed() { return real_speed; };
   double getAcceleration() { return real_accel; };
@@ -46,8 +49,6 @@ public:
   double getCMDAccel() { return cmd_accel; };
   double getCMDSpeed() { return cmd_speed; };
   double getCMDJerk() { return cmd_jerk; };
-
-  void setPosition(double pose);
 
   double min_resolution;
 
@@ -87,9 +88,10 @@ private:
 
   unsigned int last_time = 0;
 
-  bool _target_changed;
-  bool _speed_changed;
-  bool _accel_changed;
+  bool _target_changed = false; // ? I dont think I need this variable anymore, since the motioncontrols function checks the direction whenever its called
+  bool _pose_changed = false;
+  bool _speed_changed = false;
+  bool _accel_changed = false;
 };
 
 void Axis::moveTo(double absolute)
@@ -98,6 +100,15 @@ void Axis::moveTo(double absolute)
   {
     _target_changed = true;
     target_pose = absolute;
+  }
+}
+
+void Axis::setPosition(double pose)
+{
+  if (real_pose != pose)
+  {
+    real_pose = pose;
+    _pose_changed = true;
   }
 }
 
@@ -141,17 +152,13 @@ void Axis::setTargetSpeed(double speed)
 
 void Axis::setTargetAcceleration(double acceleration)
 {
-  target_accel = fabs(acceleration);;
+  target_accel = fabs(acceleration);
+  ;
 }
 
 void Axis::setTargetJerk(double jerk)
 {
   target_jerk = fabs(jerk);
-}
-
-void Axis::setLimitMode(int mode)
-{
-  limit_mode = mode;
 }
 
 double Axis::targetPosition()
@@ -168,11 +175,6 @@ void Axis::runToPosition()
 {
   while (run())
     ;
-}
-
-double Axis::distanceToGo()
-{
-  return target_pose - real_pose;
 }
 
 void Axis::stop()

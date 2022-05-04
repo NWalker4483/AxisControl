@@ -35,7 +35,7 @@ inline num sign(num curr)
   return curr >= 0 ? 1L : -1L;
 }
 
-bool Axis::computeMotionControls( int time_passed)
+bool Axis::computeMotionControls(int time_passed)
 {
   double distance_left = distanceToGo();
   double dist_to_stop = distanceToStop();
@@ -43,7 +43,7 @@ bool Axis::computeMotionControls( int time_passed)
 
   if ((fabs(distance_left) < min_resolution) or (distance_left == 0)) // Need to stop
   {
-    setSpeed(0);
+    setSpeed(0);// TODO: Fix sudden stopping issue 
   }
   else
   {
@@ -63,17 +63,17 @@ bool Axis::computeMotionControls( int time_passed)
        break;
     */
     case 1:
-      if (!approaching_target)
+      if (!approaching_target) // TODO: Clean Up this logic 
       {
         setAcceleration(distance_left < 0 ? -target_accel : target_accel);
       }
       else
       {
-        int accel_dir = currentPosition() > targetPosition() ? -1 : 1;// Direction of acceleration
+        int accel_dir = currentPosition() > targetPosition() ? -1 : 1; // Direction of acceleration towards target
 
-        setAcceleration(accel_dir * (fabs(distance_left) > fabs(dist_to_stop) ? target_accel : -target_accel)); //Consider direction of target
+        setAcceleration(accel_dir * (fabs(distance_left) > fabs(dist_to_stop) ? target_accel : -target_accel)); // Consider direction of target
       }
-      setSpeed(approach(real_speed, -target_speed, target_speed, cmd_accel / (1000/time_passed)));
+      setSpeed(approach(real_speed, -target_speed, target_speed, cmd_accel / (1000 / time_passed)));
       break;
     case 0:
       setSpeed(distance_left < 0 ? -target_speed : target_speed);
@@ -87,16 +87,17 @@ void Axis::computeMotionFeatures(int time_passed)
 {
   last_speed = real_speed;
   last_accel = real_accel;
-  last_jerk = real_jerk;
+  // last_jerk = real_jerk;
 
   double d_p = real_pose - last_pose;
-  real_speed = d_p * (1000L/time_passed);
+  real_speed = d_p * (1000L / time_passed);
+  last_pose = real_pose;
 
   double d_v = real_speed - last_speed;
-  real_accel = d_v * (1000L/time_passed);
+  real_accel = d_v * (1000L / time_passed);
 
-  double d_a = real_accel - last_accel;
-  real_jerk = d_a * (1000L/time_passed);
+  // double d_a = real_accel - last_accel;
+  // real_jerk = d_a * (1000L / time_passed);
 }
 
 double Axis::distanceToStop()
@@ -118,15 +119,25 @@ double Axis::distanceToStop()
   return 0;
 }
 
-bool Axis::run()
-{
+bool Axis::run(){
   unsigned int curr_time = getMillis();
   int time_passed = curr_time - last_time;
+  return run(time_passed);
+}
 
+bool Axis::run(int time_passed)
+{
   computePosition();
-  computeMotionFeatures(time_passed);
-  computeMotionControls(time_passed);
-
+  if (_pose_changed)
+  {
+    computeMotionFeatures(time_passed);
+    computeMotionControls(time_passed);
+    _pose_changed = false;
+    last_time = last_time + time_passed;
+  }
+  // Double Check Blah Blah
+  if (cmd_speed == 0) computeMotionControls(time_passed);
+  
   if (_speed_changed)
   {
     updateMotorSpeed(cmd_speed); // Should take in -\(`_`)/-
@@ -134,15 +145,8 @@ bool Axis::run()
   }
 
   pollMotor();
-  last_time = curr_time;
 
-  bool done = cmd_speed == 0;
+  bool done = cmd_speed == 0; //TODO: Change done condition 
   return not done;
 }
 
-void Axis::setPosition(double pose)
-// TODO: Combine with computeMotionFeatures function
-{
-  last_pose = real_pose;
-  real_pose = pose;
-}
