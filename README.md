@@ -1,12 +1,12 @@
-# Axis Control 
+# Axis Control : OTF Motion Profile Generator
 
-Abstract classes for single and multi axis speed/acceleration control. **In Progress**
+Flexible Abstract classes for single and multi axis speed + acceleration control. 
 
 ## Setup 
 mkdir build
 sudo make install 
 or 
-Download zip 
+Download zip to arduino lib
 
 ## Overview
 ### MultiAxis<num_axis>

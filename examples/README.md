@@ -2,4 +2,4 @@ Examples
 
 some for pc 
 
-some for arduino/teensydocker
+some for arduino/teensy
