@@ -2,33 +2,42 @@ from turtle import color
 import matplotlib.pyplot as plt
 import numpy as np 
 
-lines = [[],[],[],[]]
+lines = [[],[],[],[],[],[]]
 with open("data.txt","r") as f:
     data= "_"
     while data:
         data = f.readline()
         if "#" not in data and data:
-            pos, vel, acc, jerk = [float(i) for i in data[:-1].split(",")]
-            lines[0].append(pos)
-            lines[1].append(vel)
-            lines[2].append(acc)
-            lines[3].append(jerk)
+            tar, pos, vel, acc, jerk, dts = [float(i) for i in data[:-1].split(",")]
+            lines[0].append(tar)
+            lines[1].append(pos)
+            lines[2].append(vel)
+            lines[3].append(acc)
+            lines[4].append(jerk)
+            lines[5].append(dts)
 lines = np.array(lines)
 
+
+plt.plot(range(len(lines[0])), lines[0], label='Target', color ="red")
+
+plt.plot(range(len(lines[0])), lines[1], label='Position')
+
+plt.plot(range(len(lines[0])), lines[2], label='Speed')
+
+plt.plot(range(len(lines[0])), lines[3], label='Acceleration')
+lines[5][lines[5]>10] = 10
+lines[5][lines[5]<-10] = -10
+plt.plot(range(len(lines[0])), lines[4], label='Jerk', color="purple")
+# plt.plot(range(len(lines[0])), lines[5], label='DTS', color="brown")
+
 plt.plot(range(len(lines[0])), np.zeros_like(lines[2]), label='Zero', color="black")
-
-plt.plot(range(len(lines[0])), lines[0], label='Position')
-
-plt.plot(range(len(lines[0])), lines[1], label='Speed')
-
-plt.plot(range(len(lines[0])), lines[2], label='Acceleration')
 
 
 lines[3][lines[3] > 100] = 100
 lines[3][lines[3] < -100] = -100
 # plt.plot(range(len(lines[0])), lines[3], label='Jerk')
 
-plt.legend(loc='lower left', frameon=False)
+plt.legend(loc='upper left', frameon=False)
 
 plt.savefig('foo.png')
 # plt.show()

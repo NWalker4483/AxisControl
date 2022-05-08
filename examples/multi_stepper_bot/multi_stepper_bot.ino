@@ -27,6 +27,7 @@ class StepperBot : public MultiAxis<6>
 
     void computeAxisPositions(double *axis_positions) override
     {
+        // do the linear algebra stuff
         // for (int i = 0; i < 6; i++)
         //     *(axis_positions) = steppers[i]->currentPosition();
     };

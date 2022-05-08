@@ -2,16 +2,19 @@
 #ifndef Single_Axis_h
 #define Single_Axis_h
 #include <math.h> /* fabs */
+
+#define ONE_SECOND 1000 
+
 class Axis
 {
 public:
   Axis()
   {
-    min_resolution = .5;
+    min_resolution = .0125;
   };
 
   void moveTo(double absolute);
-  void move(double relative);
+  void move(double relative) { moveTo((real_pose + relative)); };
 
   void setTargetSpeed(double speed) { target_speed = fabs(speed); };
   void setTargetAcceleration(double acceleration) { target_accel = fabs(acceleration); };
@@ -23,17 +26,18 @@ public:
   bool computeMotionControls(int time_passed);
   void computeMotionFeatures(int time_passed);
 
-  double distanceToGo() { return target_pose - real_pose; }
+  double distanceToGo() { return target_pose - real_pose; };
   double distanceToStop();
 
-  double targetPosition();
+  double targetPosition() { return target_pose; };
   double currentPosition() { return real_pose; };
 
   bool run();
-  bool run(int time_passed);
+  bool run(unsigned int curr_time);
   void runToPosition();
+  bool isDone() { return is_done; };
 
-  void stop();
+  void stop() { move(distanceToStop()); };
 
   void setPosition(double position);
 
@@ -68,7 +72,7 @@ protected:
 
 private:
   double target_pose = 0;
-  // double cmd_pose;
+  double cmd_pose = 0; // TODO: Use in forced interval mode
   double last_pose = 0;
 
   double target_speed = 0;
@@ -84,6 +88,7 @@ private:
   double last_jerk = 0;
 
   int limit_mode = 0;
+  bool is_done = true;
 
   unsigned int last_time = 0;
 
@@ -91,6 +96,7 @@ private:
   bool _pose_changed = false;
   bool _speed_changed = false;
   bool _accel_changed = false;
+  bool _jerk_changed = false;
 };
 
 void Axis::moveTo(double absolute)
@@ -134,29 +140,14 @@ void Axis::setJerk(double jerk)
   if (cmd_jerk != jerk)
   {
     cmd_jerk = jerk;
-    // _jerk_changed = true;
+    _jerk_changed = true;
   }
-}
-
-void Axis::move(double relative)
-{
-  moveTo((real_pose + relative));
-}
-
-double Axis::targetPosition()
-{
-  return target_pose;
 }
 
 void Axis::runToPosition()
 {
-  while (run())
+  while (!run())
     ;
-}
-
-void Axis::stop()
-{
-  move(distanceToStop());
 }
 
 #endif

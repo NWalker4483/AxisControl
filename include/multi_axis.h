@@ -16,6 +16,9 @@ public:
   ~MultiAxis<axis_cnt>() {}
   Axis axis[axis_cnt];
 
+  void setTargetJerk(double value);
+  void setTargetAcceleration(double value);
+  void setTargetSpeed(double value);
   void setLimitMode(int mode);
 
   void moveAllTo(double (&absolute)[axis_cnt]);
@@ -34,8 +37,6 @@ protected:
   virtual void updateMotorSpeeds(double *axis_speeds) = 0;
   virtual void pollMotors(){};
 
-private:
-  unsigned int last_time;
 };
 
 template <size_t axis_cnt>
@@ -43,6 +44,27 @@ void MultiAxis<axis_cnt>::setLimitMode(int mode)
 {
   for (int i = 0; i < axis_cnt; i++)
     axis[i].setLimitMode(mode);
+}
+
+template <size_t axis_cnt>
+void MultiAxis<axis_cnt>::setTargetJerk(double mode)
+{
+  for (int i = 0; i < axis_cnt; i++)
+    axis[i].setTargetJerk(mode);
+}
+
+template <size_t axis_cnt>
+void MultiAxis<axis_cnt>::setTargetAcceleration(double mode)
+{
+  for (int i = 0; i < axis_cnt; i++)
+    axis[i].setTargetAcceleration(mode);
+}
+
+template <size_t axis_cnt>
+void MultiAxis<axis_cnt>::setTargetSpeed(double mode)
+{
+  for (int i = 0; i < axis_cnt; i++)
+    axis[i].setTargetSpeed(mode);
 }
 
 template <size_t axis_cnt>
@@ -55,7 +77,7 @@ void MultiAxis<axis_cnt>::stop()
 template <size_t axis_cnt>
 void MultiAxis<axis_cnt>::runToPositions()
 {
-  while (run())
+  while (not run())
     ;
 }
 
@@ -78,7 +100,6 @@ template <size_t axis_cnt>
 bool MultiAxis<axis_cnt>::run()
 {
   unsigned int curr_time = getMillis();
-  unsigned int time_passed = curr_time - last_time;
 
   computeAxisPositions(current_positions);
 
@@ -91,7 +112,7 @@ bool MultiAxis<axis_cnt>::run()
     axis[i].setPosition(current_positions[i]);
 
     old_speed = axis[i].getCMDSpeed();
-    axis[i].run(time_passed);
+    axis[i].run(curr_time);
     new_speed = axis[i].getCMDSpeed();
 
     any_speed_changed = any_speed_changed or (new_speed != old_speed);
@@ -103,12 +124,12 @@ bool MultiAxis<axis_cnt>::run()
   }
 
   pollMotors();
-  last_time = curr_time;
 
   bool done = true;
   for (int i = 0; i < axis_cnt; i++)
-    done = done and (fabs(axis[i].distanceToGo()) < axis[i].min_resolution);
+    done = done and axis[i].isDone();
 
-  return not done;
+  return done;
 }
 #endif
+// https://www.baslerweb.com/fp-1636374975/media/downloads/software/pylon_software/pylon_6.3.0.23157_x86_64_setup.tar.gz
