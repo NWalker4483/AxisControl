@@ -54,7 +54,7 @@ bool Axis::computeMotionControls(int time_passed)
       return true;
       break;
     case 1:
-      if ((real_speed * real_speed) <= fabs(target_accel))
+      if (pow(real_speed,2) <= fabs(target_accel))
       {
         setSpeed(0);
         setAcceleration(0);
@@ -63,7 +63,7 @@ bool Axis::computeMotionControls(int time_passed)
       }
       break;
     case 2:
-      if (((real_speed * real_speed) <= target_accel) and
+      if ((pow(real_speed, 2) <= target_accel) and
           true)//(fabs(real_accel) <= target_jerk))
       {
         setSpeed(0);
@@ -121,8 +121,6 @@ void Axis::computeMotionFeatures(int time_passed)
 
 double Axis::distanceToStop()
 {
-
-  double abs_speed;
   switch (limit_mode)
   {
   case 0:
