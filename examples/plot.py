@@ -25,10 +25,11 @@ plt.plot(range(len(lines[0])), lines[1], label='Position')
 plt.plot(range(len(lines[0])), lines[2], label='Speed')
 
 plt.plot(range(len(lines[0])), lines[3], label='Acceleration')
-lines[5][lines[5]>10] = 10
-lines[5][lines[5]<-10] = -10
+max_ = max(lines[0]) + 5
+lines[5][lines[5]>max_] = max_
+lines[5][lines[5]<-max_] = -max_
 plt.plot(range(len(lines[0])), lines[4], label='Jerk', color="purple")
-# plt.plot(range(len(lines[0])), lines[5], label='DTS', color="brown")
+# plt.plot(range(len(lines[0])), lines[5] + lines[1], label='DTS', color="yellow")
 
 plt.plot(range(len(lines[0])), np.zeros_like(lines[2]), label='Zero', color="black")
 

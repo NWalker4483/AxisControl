@@ -120,8 +120,4 @@ virtual void updateMotorSpeed(double *axis_speed);
 virtual void pollMotor() {};
 ```
 
-## TODO:
 
-Expand Test Code
-Complete Jerk limiting
-Use debugger
