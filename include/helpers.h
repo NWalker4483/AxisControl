@@ -1,6 +1,7 @@
 
 #ifndef Helpers_h
 #define Helpers_h
+
 template <typename num>
 inline num constrain(num val, num min, num max)
 {
