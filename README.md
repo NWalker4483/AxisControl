@@ -6,7 +6,7 @@ Flexible Abstract classes for single and multi axis speed + acceleration control
 mkdir build
 sudo make install 
 or 
-Download zip to arduino lib
+Download zip to arduino libx
 
 ## Overview
 ### MultiAxis<num_axis>
