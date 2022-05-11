@@ -132,4 +132,3 @@ bool MultiAxis<axis_cnt>::run()
   return done;
 }
 #endif
-// https://www.baslerweb.com/fp-1636374975/media/downloads/software/pylon_software/pylon_6.3.0.23157_x86_64_setup.tar.gz
