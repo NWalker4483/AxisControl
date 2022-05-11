@@ -2,6 +2,8 @@
 #ifndef Single_Axis_h
 #define Single_Axis_h
 #include <math.h> /* fabs */
+#include "helpers.h"
+
 class Axis
 {
 public:
