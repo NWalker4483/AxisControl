@@ -7,6 +7,7 @@ class TestAxis : public Axis
     unsigned int getMillis()
     {
         time += inc;
+        
         return time;
     }
 
@@ -40,8 +41,15 @@ void loop()
         }
         unsigned int stop = millis();
         float per_iter = (stop - start) / iter;
-
-        // "Average freq over " {}
-        // "iterations\n"
+        Serial.print("\nMode ");
+        Serial.print(mode);
+        Serial.print("\nAverage over ");
+        Serial.print(iter);
+        Serial.print(" iterations:");
+        Serial.print("\n\t HZ: ");
+        Serial.print(per_iter);
+        Serial.print("\n\t Loop Time: ");
+        Serial.print(per_iter);
     }
+    delay(2000);
 }
