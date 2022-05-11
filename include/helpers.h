@@ -2,6 +2,7 @@
 #ifndef Helpers_h
 #define Helpers_h
 
+#ifndef ARDUINO
 template <typename num>
 inline num constrain(num val, num min, num max)
 {
@@ -11,6 +12,7 @@ inline num constrain(num val, num min, num max)
     return max;
   return val;
 }
+#endif
 
 template <typename num>
 num approach(num curr, num min, num max, num step)

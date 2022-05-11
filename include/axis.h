@@ -149,8 +149,6 @@ void Axis::runToPosition()
     ;
 }
 
-
-
 bool Axis::computeMotionControls(int time_passed)
 {
   double seconds_passed = 1000L / time_passed;
