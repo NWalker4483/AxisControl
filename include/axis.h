@@ -177,7 +177,7 @@ bool Axis::computeMotionControls(int time_passed)
       break;
     case 2:
       if ((pow(real_speed, 2) <= target_accel) and
-         true)// (fabs(real_accel) <= target_jerk))
+        (fabs(real_accel) <= target_jerk))
       {
         setSpeed(0);
         setAcceleration(0);
@@ -192,18 +192,27 @@ bool Axis::computeMotionControls(int time_passed)
   is_done = false;
 
 double flipped = real_speed < 0 ? -1L : 1L; // GOOD
-double t_a0;
+double t_a0;double d_a0;
  double stop_distance;
   switch (limit_mode)
   {
   case 2:
- t_a0 = (fabs(real_accel) / target_jerk);
-  stop_distance = (flipped * real_speed * t_a0) + ((flipped * real_accel * pow(t_a0, 2))/2) + ((-target_jerk * pow(t_a0, 3)) / 6);
-  // if (distance_left * sign(real_speed) <= (flipped * stop_distance) ){
-  //   slowdown = false; 
-  // }
+  
+  t_a0 = (fabs(real_accel) / target_jerk);
+  d_a0 = 0;
+
+  if ((3 * d_a0) > fabs(dist_to_stop)) {slowdown = false;}
+
+  if (fabs(d_a0) >= fabs(distance_left)) {
+    // Accel Should Approach 0 in whatever neccesary direction 
+    
+  }
+
+if fabs d_a0 < fabs distance_left and dist_to_stop > distance_left
     setJerk(accel_dir * (slowdown ? -target_jerk : target_jerk));
     setAcceleration(approach(real_accel, -target_accel, target_accel, (cmd_jerk / seconds_passed)));
+
+
     setSpeed(approach(real_speed, -target_speed, target_speed, (cmd_accel / seconds_passed)));
     break;
   case 1:

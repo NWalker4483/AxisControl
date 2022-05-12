@@ -4,7 +4,7 @@ Flexible abstract classes for single and multi-axis speed + acceleration + jerk 
 
 |                                        |                                        |                                        |
 | -------------------------------------- | -------------------------------------- | -------------------------------------- |
-| <img src="imgs/foo1.png" width= "300"> | <img src="imgs/foo2.png" width= "300"> | <img src="imgs/foo3.png" width= "300"> |
+| <img src="imgs/foo1.png" width= "500"> | <img src="imgs/foo2.png" width= "500"> | <img src="imgs/foo3.png" width= "500"> |
 
 ## Installation
 
