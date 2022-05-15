@@ -8,3 +8,4 @@ build/
 *.out
 data.txt
 foo.png
+.DS_Store

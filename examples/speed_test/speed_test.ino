@@ -38,6 +38,7 @@ void loop()
         test.setLimitMode(mode);
         unsigned int start = millis();
         test.setPosition(0);
+        // test.reset();
         test.move(10000);
         for (int i = 0; i < iter; i++)
         {
