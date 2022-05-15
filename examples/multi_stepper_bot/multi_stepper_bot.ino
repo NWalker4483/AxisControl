@@ -34,6 +34,7 @@ class StepperBot : public MultiAxis<6>
 
     void updateMotorSpeeds(double *axis_speeds) override
     {
+        // do the linear algebra stuff
         for (int i = 0; i < 6; i++)
             steppers[i]->setTargetSpeed(*(axis_speeds + i));
     }
