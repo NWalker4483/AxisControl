@@ -1,5 +1,5 @@
 #include "AxisControl.h"
-#include "accel_stepper.h"
+#include "extras/accel_stepper.h"
 
 AccelStepper stepper1(1, 2);
 AccelStepper stepper2(3, 4);

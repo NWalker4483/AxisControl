@@ -6,11 +6,11 @@ class AccelStepper : public Axis
 private:
     int pulse_pin;
     int dir_pin;
-
-public:
     int steps_taken = 0;
     int pulse_width = 0;
     int last_switch = 0;
+
+public:
     byte curr_dir = LOW;
     byte curr_state = LOW;
 
