@@ -64,7 +64,7 @@ void pollMotors() override {
     /* this function is meant to stand in the place of anything that needs to be called as often as
 possible for the motors to move at an appropriate speed
 
-    e.g AccelStepper::runSpeed()
+    e.g AxisStepper::runSpeed()
 */
    for(int i = 0; i < 3; i++) motor[i].update(axis[i].real_speed);
 };

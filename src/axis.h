@@ -12,6 +12,9 @@ public:
     min_resolution = .0125;
   };
 
+  bool canMoveTo(double absolute);
+  bool canMove(double relative) { return canMoveTo(currentPosition() + relative); };
+
   void moveTo(double absolute);
   void move(double relative) { moveTo((real_pose + relative)); };
 
@@ -31,12 +34,16 @@ public:
   double targetPosition() { return target_pose; };
   double currentPosition() { return real_pose; };
 
-  void setLimits(double upper, double lower){};
-  void clearLimits(){};
+  void setPoseLimits(double lower, double upper){};
+  void clearLimits() { has_pose_limits = false; };
 
   bool run();
   bool run(unsigned int curr_time);
-  void runToPosition();
+  void runToPosition()
+  {
+    while (!run())
+      ;
+  };
   bool isDone() { return is_done; };
 
   void stop() { move(distanceToStop()); };
@@ -90,6 +97,7 @@ private:
   double last_jerk = 0;
 
   int limit_mode = 0;
+  bool has_pose_limits = false;
   bool is_done = true;
 
   unsigned int last_time = 0;
@@ -100,6 +108,12 @@ private:
   bool _accel_changed = false;
   bool _jerk_changed = false;
 };
+
+bool Axis::canMoveTo(double absolute)
+  {
+    if (has_pose_limits)
+      return false;
+  };
 
 void Axis::moveTo(double absolute)
 {
@@ -144,12 +158,6 @@ void Axis::setJerk(double jerk)
     cmd_jerk = jerk;
     _jerk_changed = true;
   }
-}
-
-void Axis::runToPosition()
-{
-  while (!run())
-    ;
 }
 
 #endif

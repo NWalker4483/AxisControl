@@ -1,16 +1,16 @@
 #include "AxisControl.h"
-#include "extras/accel_stepper.h"
+#include "extras/axis_stepper.h"
 
-AccelStepper stepper1(1, 2);
-AccelStepper stepper2(3, 4);
-AccelStepper stepper3(5, 6);
-AccelStepper stepper4(7, 8);
-AccelStepper stepper5(9, 10);
-AccelStepper stepper6(11, 12);
+AxisStepper stepper1(1, 2);
+AxisStepper stepper2(3, 4);
+AxisStepper stepper3(5, 6);
+AxisStepper stepper4(7, 8);
+AxisStepper stepper5(9, 10);
+AxisStepper stepper6(11, 12);
 
 class StepperBot : public MultiAxis<6>
 {
-    AccelStepper *steppers[6];
+    AxisStepper *steppers[6];
 
     StepperBot()
     {

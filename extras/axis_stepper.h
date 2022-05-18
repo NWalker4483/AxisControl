@@ -1,7 +1,7 @@
 #include "AxisControl.h"
-// A Non-Blocking AccelStepper Implementation
+// A Fully Non-Blocking AccelStepper Implementation
 
-class AccelStepper : public Axis
+class AxisStepper : public Axis
 {
 private:
     int pulse_pin;

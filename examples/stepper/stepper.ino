@@ -1,7 +1,7 @@
 #include "AxisControl.h"
-#include "../extras/accel_stepper.h"
+#include "extras/axis_stepper.h"
 
-AccelStepper stepper(11, 10);
+AxisStepper stepper(11, 10);
 
 void setup()
 {
