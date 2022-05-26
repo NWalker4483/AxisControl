@@ -1,3 +1,6 @@
+
+#ifndef Single_Axis
+#define Single_Axis
 #include "axis.h"
 
 bool Axis::computeMotionControls(int time_passed)
@@ -6,7 +9,7 @@ bool Axis::computeMotionControls(int time_passed)
   double distance_left = distanceToGo();
   double dist_to_stop = distanceToStop();
   bool approaching_target = sign(dist_to_stop) == sign(distance_left);
-  bool slowdown = (fabs(distance_left) > fabs(dist_to_stop)) or !approaching_target;
+  bool slowdown = (fabs(distance_left) >= fabs(dist_to_stop)) or !approaching_target;
   double accel_dir = currentPosition() > targetPosition() ? 1L : -1L; // Direction of acceleration towards target
   if ((fabs(distance_left) < min_resolution) or (distance_left == 0)) // Need to stop
   {
@@ -18,7 +21,7 @@ bool Axis::computeMotionControls(int time_passed)
       return true;
       break;
     case 1:
-      if (pow(real_speed,2) <= fabs(target_accel))
+      if ( pow(real_speed,2) <= fabs(target_accel))
       {
         setSpeed(0);
         setAcceleration(0);
@@ -68,7 +71,7 @@ double t_a0;double d_a0;
     break;
   case 1:
     setAcceleration(accel_dir * (slowdown ? -target_accel : target_accel));
-    setSpeed(approach(real_speed, -target_speed, target_speed, cmd_accel / seconds_passed));
+    setSpeed(approach(cmd_speed, -target_speed, target_speed, cmd_accel / seconds_passed));
     break;
   case 0:
     setSpeed(distance_left < 0 ? -target_speed : target_speed);
@@ -93,8 +96,8 @@ void Axis::computeMotionFeatures(int time_passed)
   double d_v = real_speed - last_speed;
   real_accel = d_v * seconds_passed;
 
-  double d_a = real_accel - last_accel;
-  real_jerk = d_a * seconds_passed;
+  // double d_a = real_accel - last_accel;
+  // real_jerk = d_a * seconds_passed;
 }
 
 double Axis::distanceToStop()
@@ -149,7 +152,7 @@ bool Axis::run(unsigned int curr_time)
   int time_passed = curr_time - last_time;
   computePosition();
 
-  if (_pose_changed or (time_passed >= 50)) // Limit time between calculations for incremental motors
+  if (_pose_changed or (time_passed >= 250)) // Limit time between calculations for incremental motors
   {
     computeMotionFeatures(time_passed);
     computeMotionControls(time_passed);
@@ -170,3 +173,5 @@ bool Axis::run(unsigned int curr_time)
 
   return isDone();
 }
+
+#endif

@@ -18,6 +18,11 @@ with open("data.txt","r") as f:
 lines = np.array(lines)
 
 
+# max_ = max(lines[0]) + 5
+# min_ = min(lines[0]) + 5
+# lines[1][lines[1]>max_] = max_
+# lines[1][lines[1]<min_] = min_
+
 plt.plot(range(len(lines[0])), lines[0], label='Target', color ="red")
 
 plt.plot(range(len(lines[0])), lines[1], label='Position')
@@ -25,9 +30,7 @@ plt.plot(range(len(lines[0])), lines[1], label='Position')
 plt.plot(range(len(lines[0])), lines[2], label='Speed')
 
 plt.plot(range(len(lines[0])), lines[3], label='Acceleration')
-max_ = max(lines[0]) + 5
-lines[5][lines[5]>max_] = max_
-lines[5][lines[5]<-max_] = -max_
+
 plt.plot(range(len(lines[0])), lines[4], label='Jerk', color="purple")
 # plt.plot(range(len(lines[0])), lines[5] + lines[1], label='DTS', color="yellow")
 
@@ -41,4 +44,4 @@ lines[3][lines[3] < -100] = -100
 plt.legend(loc='upper left', frameon=False)
 
 plt.savefig('foo.png')
-# plt.show()
+plt.show()

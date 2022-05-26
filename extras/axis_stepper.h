@@ -6,21 +6,21 @@ class AxisStepper : public Axis
 private:
     int pulse_pin;
     int dir_pin;
-    int steps_taken = 0;
     int pulse_width = 0;
     int last_switch = 0;
-
+    bool stopped = 0; 
 public:
+    int steps_taken = 0;//TODO: Make private with setter for ZT
     byte curr_dir = LOW;
     byte curr_state = LOW;
 
-    AccelStepper(int pul, int dir)
+    AxisStepper(int pul, int dir)
     {
         pulse_pin = pul;
         dir_pin = dir;
         pinMode(pulse_pin, OUTPUT);
         pinMode(dir_pin, OUTPUT);
-        setResolution(0);
+        setResolution(2);
     }
 
     unsigned int getMillis()
@@ -33,16 +33,22 @@ public:
         setPosition(steps_taken);
     }
 
+    void clearSteps(){
+        steps_taken  = 0;
+    }
+
     void updateMotorSpeed(double axis_speed)
     {
         curr_dir = axis_speed > 0 ? HIGH : LOW;
         digitalWrite(dir_pin, curr_dir);
-        pulse_width = (1000 * (axis_speed)) / 2;
+        stopped = (axis_speed == 0);
+        pulse_width = (1000L / fabs(axis_speed)) / 2;
     }
 
     void pollMotor()
     {
-        unsigned int curr_time = millis();
+        unsigned int curr_time = micros();
+        if (stopped) return;
         if ((curr_time - last_switch) >= pulse_width) // 50% duty cycle
         {
             if (curr_state == HIGH)

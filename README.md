@@ -1,4 +1,4 @@
-# Axis Control : OTF Motion Profile Generator
+# Axis Control : OTF Motion Profile Controller
 
 Flexible abstract classes for single and multi-axis speed + acceleration + jerk control. (Jerk In Progress)
 
@@ -18,7 +18,7 @@ sudo make install
 or
 
 ```
-Add zip to Arduino IDE
+Add zip to Arduino IDE Libaries Folder
 ```
 
 ## Usage

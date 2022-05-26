@@ -24,6 +24,7 @@ public:
 
   void setResolution(double res) { min_resolution = fabs(res); };
   void setLimitMode(int mode) { limit_mode = mode; };
+  void setControlMode(int mode) { control_mode = mode; };
 
   bool computeMotionControls(int time_passed);
   void computeMotionFeatures(int time_passed);
@@ -80,8 +81,11 @@ protected:
   double min_resolution;
 
 private:
+  double lower_pose_limit;
+  double upper_pose_limit;
+  
   double target_pose = 0;
-  double cmd_pose = 0; // TODO: Use in forced interval mode
+  double cmd_pose = 0; // TODO: Use in forced interval/ servo mode
   double last_pose = 0;
 
   double target_speed = 0;
@@ -97,6 +101,8 @@ private:
   double last_jerk = 0;
 
   int limit_mode = 0;
+  int control_mode = 0;
+  
   bool has_pose_limits = false;
   bool is_done = true;
 
@@ -110,10 +116,13 @@ private:
 };
 
 bool Axis::canMoveTo(double absolute)
+{
+  if (!has_pose_limits)
   {
-    if (has_pose_limits)
-      return false;
-  };
+    return true;
+  }
+  return absolute == constrain(absolute, lower_pose_limit, upper_pose_limit);
+};
 
 void Axis::moveTo(double absolute)
 {

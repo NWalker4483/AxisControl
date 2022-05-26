@@ -8,7 +8,7 @@ OBJ := $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 EXA := $(wildcard examples/*/*.cpp)
 
-CPPFLAGS := -Iinclude -std=c++11
+CPPFLAGS := -Iinclude -std=c++11 -Isrc
 CFLAGS   := -Wall# some warnings about bad code
 
 all: library
@@ -26,7 +26,7 @@ install: library
 	cp include/* /usr/local/include/axis_control/
 
 examples: library #	: $(EXA)
-	$(CXX) $(CPPFLAGS) -g -o a.out examples/test_bot/test_bot.cpp -L. -laxis_control
+	$(CXX) $(CPPFLAGS) -g -o a.out examples/test_axis/test_axis.cpp -L. -laxis_control
 
 .PHONY: list
 list:
