@@ -32,7 +32,7 @@ plt.plot(range(len(lines[0])), lines[2], label='Speed')
 plt.plot(range(len(lines[0])), lines[3], label='Acceleration')
 
 plt.plot(range(len(lines[0])), lines[4], label='Jerk', color="purple")
-# plt.plot(range(len(lines[0])), lines[5] + lines[1], label='DTS', color="yellow")
+#plt.plot(range(len(lines[0])), lines[5] + lines[1], label='DTS', color="yellow")
 
 plt.plot(range(len(lines[0])), np.zeros_like(lines[2]), label='Zero', color="black")
 

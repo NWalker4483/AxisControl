@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
 
     axis.setTargetSpeed(10);
     axis.setTargetAcceleration(2);
-    axis.setTargetJerk(.5);
+    // axis.setTargetJerk(.5);
     axis.setResolution(0);
 
     for (int i = 0; i < 3000; i++)

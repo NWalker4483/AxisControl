@@ -20,7 +20,7 @@ public:
         dir_pin = dir;
         pinMode(pulse_pin, OUTPUT);
         pinMode(dir_pin, OUTPUT);
-        setResolution(2);
+        setResolution(.5);
     }
 
     unsigned int getMillis()
